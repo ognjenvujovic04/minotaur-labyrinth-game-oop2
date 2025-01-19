@@ -1,28 +1,37 @@
 #include <iostream>
+#include "maze_genearator.h"
 
 using namespace std;
 
 int main(){
 	cout << "Dobrodosli u igricu bjeg iz lavirinta u Knososu!" << endl << endl;
-	int n, m, k;
+	int columns, rows, item_number;
 	cout << "Unesite broj kolona: ";
-	cin >> n;
+	cin >> columns;
 	cout << "Unesite broj redova: ";
-	cin >> m;
+	cin >> rows;
 	while (true){	
 		cout << "Unesite broj predmeta: ";
-		cin >> k;
-		if (k > (n * m)/2){
+		cin >> item_number;
+		if (item_number > (columns * rows)/2){
 			cout << "Broj predmeta ne moze biti veci od broja slobodnih polja lavirinta!" << endl;
 		}
-		else if(k<4) {
+		else if(item_number <4) {
 			cout << "Broj predmeta mora biti veci od 3!" << endl;
 		}
 		else {
 			break;
 		}
 	}
-	cout << n << " " << m << " " << k << endl;
+	cout << "Igra pocinje!" << endl;
+	char** maze = generateMaze(rows, columns, item_number);
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < columns; j++) {
+			cout << maze[i][j];
+		}
+		cout << endl;
+	}
+	
 
 
 	
