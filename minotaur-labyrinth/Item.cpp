@@ -9,3 +9,7 @@ ItemType Item::getType() const {
 int Item::getDuration() const {
     return duration;
 }
+
+void Item::decreaseDuration() {
+	duration--;
+}

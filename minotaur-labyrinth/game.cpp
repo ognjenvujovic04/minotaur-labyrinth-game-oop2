@@ -24,11 +24,30 @@ Game::~Game() {
 	//todo
 }
 
+void Game::refresh() {
+	system("CLS");
+	displayGameState();
+	for (Item* item : items) {
+		if (item->getDuration() == 0) {
+			// todo mozda i nece trebati ako svaki put ucitavam efekte
+			//item->resetEffect();
+			items.erase(remove(items.begin(), items.end(), item), items.end());
+			delete item;
+		}
+		else {
+			item->decreaseDuration();
+			item->applyEffect();
+		}
+
+
+	}
+}
+
 void Game::start() {
 	char command;
 	while (!gameOver) {
-		system("CLS");
-		displayGameState();
+		refresh();
+		
 		cout << endl << "Koristite WASD za kretanje robota, Q za izlaz iz igre " << endl;
 		cout << "Unesite komandu: ";
 		bool error = false;

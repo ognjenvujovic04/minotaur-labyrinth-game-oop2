@@ -21,6 +21,7 @@ public:
 	~Game();
 
 	void start();
+	void refresh();
 	void quit();
 	void displayGameState();
 	string getMazeString();

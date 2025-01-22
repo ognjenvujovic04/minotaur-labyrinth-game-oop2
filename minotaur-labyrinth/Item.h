@@ -16,6 +16,8 @@ public:
     // Dohvatanje trajanja efekta
     int getDuration() const;
 
+	void decreaseDuration();   
+
     // Efekat predmeta (apstraktna metoda)
     virtual void applyEffect() const = 0;
 };
