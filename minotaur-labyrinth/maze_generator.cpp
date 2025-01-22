@@ -29,31 +29,8 @@ void generateEmptyMaze(char** maze, int rows, int columns, tuple<int,int> &start
 
 }
 
-void generateEmptyMaze(char** maze, int rows, int columns) {
-	// Spoljasnji zidovi
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < columns; j++) {
-			if (i == 0 || i == rows - 1 || j == 0 || j == columns - 1) {
-				maze[i][j] = '#';
-			}
-			else {
-				maze[i][j] = '.';
-			}
-		}
-	}
-	// Ulaz i robot
-	int entrance = rand() % (columns - 2) + 1;
-	maze[0][entrance] = 'U';
-	maze[1][entrance] = 'R';
-	// Izlaz
-	int exit = rand() % (columns - 2) + 1;
-	maze[rows - 1][exit] = 'I';
 
-}
-
-
-
-void generateInternalWalls(char** maze, int rows, int columns, set<tuple<int, int>> &pVisited) {
+void generateWalls(char** maze, int rows, int columns, set<tuple<int, int>> &pVisited, tuple<int, int> &pStart) {
 	//Provjera da li postoji putanja od ulaza do izlaza i zapis u path
 	
 
@@ -112,31 +89,28 @@ void generateInternalWalls(char** maze, int rows, int columns, set<tuple<int, in
 		}
 		if (pathExists) {
 			pVisited = visited;
+			pStart = start;
 			break;
 		}
 	}
 }
 
 
-//char** generateMaze(int rows, int columns, int itemNumber) {
 void generateMaze(char** maze, int rows, int columns, int itemNumber) {
 	// Mjerenje vremena generisanja
 	clock_t begin = clock();
 
 	// Uzimanje random seed-a
 	srand(time(0));
-
-	// Prazan lavirint
-	generateEmptyMaze(maze, rows, columns);
-	
 	
 	// Posjecena polja
 	set<tuple<int, int>> visited;
 
+
 	tuple<int, int> start;
-	// todo Vrijeme genersianja putanje	
-	// Unutrasnji zidovi i put
-	generateInternalWalls(maze, rows, columns, visited);
+	
+	// Zidovi i moguca polja
+	generateWalls(maze, rows, columns, visited, start);
 
 	// Ispis stanja maze-a ali visited polja su zelene boje
 
