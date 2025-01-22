@@ -31,9 +31,6 @@ void generateEmptyMaze(char** maze, int rows, int columns, tuple<int,int> &start
 
 
 void generateWalls(char** maze, int rows, int columns, set<tuple<int, int>> &pVisited, tuple<int, int> &pStart) {
-	//Provjera da li postoji putanja od ulaza do izlaza i zapis u path
-	
-
 	// Pocetna lokacija robota
 	tuple<int, int> start;
 

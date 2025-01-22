@@ -120,7 +120,8 @@ void Game::displayGameState() {
 	cout << endl << "Broj predmeta: " << itemNumber << endl;
 	cout << "Aktivni predmeti: " << endl;
 	for (int i = 0; i < items.size(); i++) {
-		switch (items[i]->getType()) {
+		if (items[i]->getDuration() > 0) {
+			switch (items[i]->getType()) {
 			case FOG:
 				cout << "Magla rata: ";
 				break;
@@ -133,8 +134,10 @@ void Game::displayGameState() {
 			case HAMMER:
 				cout << "Cekic: ";
 				break;
+			}
+			cout << "Trajanje jos: " << items[i]->getDuration() << endl;
 		}
-		cout << "Trajanje: " << items[i]->getDuration() + 1 << endl;
+
 	}
 
 }
@@ -210,6 +213,11 @@ void Game::handleRobotMovement(char command) {
 			}
 			items.push_back(item);
 			itemNumber--;
+
+			// Postavljanje nove pozicije robota
+			maze.getMazeMatrix()[x][y] = '.';
+			maze.getMazeMatrix()[newX][newY] = 'R';
+			maze.setRobotPosition(tuple<int, int>(newX, newY));
 		}
 		else if (maze.getMazeMatrix()[newX][newY] == 'U') {
 			throw "Na toj poziciji se nalazi ulaz!";
@@ -218,7 +226,8 @@ void Game::handleRobotMovement(char command) {
 			//todo zapis stanja
 			cout << endl << endl << "Pobjeda!" << endl;
 			gameOver = true;
-		} if (maze.getMazeMatrix()[newX][newY] == 'M') {
+		} 
+		else if (maze.getMazeMatrix()[newX][newY] == 'M') {
 			for (Item* item : items) {
 				if (item->getType() == SWORD && item->getDuration() > 0) {
 					// Ubijen minotaur
@@ -229,7 +238,12 @@ void Game::handleRobotMovement(char command) {
 					return;
 				}
 			}
-
+			if (isMinotaurAlive) {
+				gameOver = true;
+				cout << endl << endl << "Napali ste minotaura bez maca, izgubili ste!" << endl;
+				maze.getMazeMatrix()[x][y] = '.';
+				return;
+			}
 		}
 		else {
 			// Postavljanje nove pozicije robota
