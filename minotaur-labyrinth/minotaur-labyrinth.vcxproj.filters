@@ -29,7 +29,7 @@
     <ClInclude Include="game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="maze_genearator.h">
+    <ClInclude Include="maze_generator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

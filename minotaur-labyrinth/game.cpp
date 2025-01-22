@@ -1,6 +1,6 @@
 #include <iostream>
 #include "game.h"
-#include "maze_genearator.h"
+#include "maze_generator.h"
 
 using namespace std;
 
@@ -40,9 +40,10 @@ void Game::quit() {
 }
 
 void Game::displayGameState() {
+	// todo ispis mape
 	for (int i = 0; i < sizeof(mazeMatrix); i++) {
 		for (int j = 0; j < sizeof(mazeMatrix[i]); j++) {
-			cout << mazeMatrix[i][j];
+			cout << mazeMatrix[i][j]<< " ";
 		}
 		cout << endl;
 	}
