@@ -22,4 +22,6 @@ public:
 	void printMaze(bool isFogActive);
 	string toString();
 	bool isWall(int x, int y);
+	bool canMinotaurMoveTo(int x, int y);
+
 };

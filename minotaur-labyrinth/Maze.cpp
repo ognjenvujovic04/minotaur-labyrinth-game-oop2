@@ -98,3 +98,13 @@ bool Maze::isWall(int x, int y) {
 	}
 	return false;
 }
+
+bool Maze::canMinotaurMoveTo(int x, int y) {
+	if (x < 0 || x >= rows || y < 0 || y >= columns) {
+		return false;
+	}
+	if (mazeMatrix[x][y] == '#' || mazeMatrix[x][y] == 'I' || mazeMatrix[x][y] == 'U') {
+		return false;
+	}
+	return true;
+}

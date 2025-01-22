@@ -191,7 +191,6 @@ void Game::handleRobotMovement(char command) {
 	}
 	else {
 		// Provjera da li je na novoj poziciji predmet
-		// todo efekat predmeta
 		if (maze.mazeMatrix[newX][newY] == 'P') {
 			int random = rand() % 4;
 			Item* item;
@@ -243,7 +242,6 @@ void Game::handleRobotMovement(char command) {
 
 // Funkcija za generisanje poteza Minotaura
 void Game::handleMinotaurMovement() {
-	//todo bug fix minotaur jede izlaz ulaz
 	int x, y;
 	x = get<0>(maze.minotaurPosition);
 	y = get<1>(maze.minotaurPosition);
@@ -266,8 +264,9 @@ void Game::handleMinotaurMovement() {
 
 	// Pravljenje vectora mogucih polja i nesumican izbor novog polja
 	vector<tuple<int, int>> possibleMoves;
-	// todo mozda napravit funkciju za ovo jer se ponavlja
-	if (!maze.isWall(x - 1, y) && maze.mazeMatrix[x - 1][y] != 'I' && maze.mazeMatrix[x - 1][y] != 'U') {
+
+
+	if (maze.canMinotaurMoveTo(x - 1, y)) {
 		if (maze.mazeMatrix[x - 1][y] == 'R') {
 			if (!isShieldActive) {
 				foundRobot = true;
@@ -279,7 +278,7 @@ void Game::handleMinotaurMovement() {
 			possibleMoves.push_back(make_tuple(x - 1, y));
 		}
 	}
-	if (!maze.isWall(x + 1, y) && maze.mazeMatrix[x + 1][y] != 'I' && maze.mazeMatrix[x + 1][y] != 'U') {
+	if (maze.canMinotaurMoveTo(x + 1, y)) {
 		if (maze.mazeMatrix[x + 1][y] == 'R') {
 			if (!isShieldActive) {
 				foundRobot = true;
@@ -291,7 +290,7 @@ void Game::handleMinotaurMovement() {
 			possibleMoves.push_back(make_tuple(x + 1, y));
 		}
 	}
-	if (!maze.isWall(x, y - 1) && maze.mazeMatrix[x][y - 1] != 'I' && maze.mazeMatrix[x][y - 1] != 'U') {
+	if (maze.canMinotaurMoveTo(x, y - 1)) {
 		if (maze.mazeMatrix[x][y - 1] == 'R') {
 			if (!isShieldActive) {
 				foundRobot = true;
@@ -303,7 +302,7 @@ void Game::handleMinotaurMovement() {
 			possibleMoves.push_back(make_tuple(x, y - 1));
 		}
 	}
-	if (!maze.isWall(x, y + 1) && maze.mazeMatrix[x][y + 1] != 'I' && maze.mazeMatrix[x][y + 1] != 'U') {
+	if (maze.canMinotaurMoveTo(x, y + 1)) {
 		if (maze.mazeMatrix[x][y + 1] == 'R') {
 			if (!isShieldActive) {
 				foundRobot = true;
