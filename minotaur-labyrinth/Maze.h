@@ -18,6 +18,7 @@ public:
 	~Maze();
 
 	void printMaze();
+	bool isWall(int x, int y);
 };
 
 #pragma once

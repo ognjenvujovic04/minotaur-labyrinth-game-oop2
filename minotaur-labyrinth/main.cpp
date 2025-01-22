@@ -5,7 +5,7 @@
 
 using namespace std;
 
-//Adrese varijabli koje se koriste u funkcijama
+// Funkcija dobrodoslice koja uzima broj kolona, redova i predmeta od korisnika
 void welcome(int& columns, int& rows, int& item_number) {
 	cout << "Dobrodosli u igricu bjeg iz lavirinta u Knososu!" << endl << endl;
 
@@ -54,9 +54,9 @@ void welcome(int& columns, int& rows, int& item_number) {
 int main(){
 	int columns, rows, item_number;
 
-	welcome(columns, rows, item_number);
+	//welcome(columns, rows, item_number);
 	
-	Game game(columns, rows, item_number);	
+	Game game(20, 15, 10);	
 
 	game.start();
 

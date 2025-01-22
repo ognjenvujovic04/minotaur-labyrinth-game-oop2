@@ -7,7 +7,7 @@ Maze::Maze(int pRows, int pColumns, int pItemNumber) {
 	itemNumber = pItemNumber;
 	rows = pRows;
 	columns = pColumns;
-
+	
 	mazeMatrix = new char* [rows];
 	for (int i = 0; i < rows; i++) {
 		mazeMatrix[i] = new char[columns];
@@ -69,4 +69,15 @@ void Maze::printMaze() {
 		std::cout << std::endl;
 	}
 
+}
+
+
+bool Maze::isWall(int x, int y) {
+	if (x < 0 || x >= rows || y < 0 || y >= columns) {
+		return true;
+	}
+	if (mazeMatrix[x][y] == '#') {
+		return true;
+	}
+	return false;
 }

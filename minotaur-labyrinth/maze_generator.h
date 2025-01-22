@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void generateMaze(char** mazeMatrix, int rows, int columns, int itemNumber);
+void generateMaze(char** mazeMatrix, int rows, int columns, int itemNumber, tuple<int, int> &robotPosition);
 
 void generateEmptyMaze(char** maze, int rows, int columns, tuple<int, int>& start);
 
