@@ -96,7 +96,7 @@ void generateWalls(char** maze, int rows, int columns, set<tuple<int, int>> &pVi
 }
 
 
-void generateMaze(char** maze, int rows, int columns, int itemNumber) {
+void generateMaze(char** maze, int rows, int columns, int itemNumber, tuple<int,int> robotPosition) {
 	// Mjerenje vremena generisanja
 	clock_t begin = clock();
 
@@ -111,6 +111,8 @@ void generateMaze(char** maze, int rows, int columns, int itemNumber) {
 	
 	// Zidovi i moguca polja
 	generateWalls(maze, rows, columns, visited, start);
+
+	robotPosition = start;
 
 	// Ispis stanja maze-a ali visited polja su zelene boje
 

@@ -12,7 +12,7 @@ Maze::Maze(int pRows, int pColumns, int pItemNumber) {
 	for (int i = 0; i < rows; i++) {
 		mazeMatrix[i] = new char[columns];
 	}
-	generateMaze(mazeMatrix,pRows, pColumns, pItemNumber);
+	generateMaze(mazeMatrix, pRows, pColumns, pItemNumber, robotPosition);
 }
 
 Maze::Maze() {
@@ -20,6 +20,7 @@ Maze::Maze() {
 	columns = 0;
 	itemNumber = 0;
 	mazeMatrix = nullptr;
+	robotPosition = make_tuple(0, 0);
 }
 
 Maze::~Maze() {
