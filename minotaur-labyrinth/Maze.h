@@ -1,5 +1,6 @@
 #pragma once
 #include <set>
+#include <string>
 #include <tuple>
 
 using namespace std;
@@ -19,7 +20,6 @@ public:
 	~Maze();
 
 	void printMaze(bool isFogActive);
+	string toString();
 	bool isWall(int x, int y);
 };
-
-#pragma once

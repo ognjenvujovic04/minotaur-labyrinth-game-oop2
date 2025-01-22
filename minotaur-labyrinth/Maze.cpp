@@ -78,6 +78,16 @@ void Maze::printMaze(bool isFogActive) {
 
 }
 
+string Maze::toString() {
+	string retString = "";
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < columns; j++) {
+			retString += mazeMatrix[i][j];
+		}
+		retString += "\n";
+	}
+	return retString;
+}
 
 bool Maze::isWall(int x, int y) {
 	if (x < 0 || x >= rows || y < 0 || y >= columns) {

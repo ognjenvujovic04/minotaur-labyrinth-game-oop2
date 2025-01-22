@@ -140,16 +140,7 @@ void Game::displayGameState() {
 }
 
 string Game::getMazeString() {
-	//todo
-	/*string mazeString = "";
-	for (int i = 0; i < sizeof(mazeMatrix); i++) {
-		for (int j = 0; j < sizeof(mazeMatrix[i]); j++) {
-			mazeString += mazeMatrix[i][j];
-		}
-		mazeString += "\n";
-	}
-	return mazeString;*/
-	return "todo";
+	return maze.toString();
 }
 
 // Funkcija za obradu kretanja robota
