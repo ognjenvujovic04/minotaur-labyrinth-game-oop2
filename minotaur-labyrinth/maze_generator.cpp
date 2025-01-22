@@ -96,7 +96,7 @@ void generateWalls(char** maze, int rows, int columns, set<tuple<int, int>> &pVi
 }
 
 
-void generateMaze(char** maze, int rows, int columns, int itemNumber, tuple<int,int> &robotPosition) {
+void generateMaze(char** maze, int rows, int columns, int itemNumber, tuple<int, int>& robotPosition, tuple<int, int>& minotaurPosition) {
 	// Mjerenje vremena generisanja
 	clock_t begin = clock();
 
@@ -142,9 +142,11 @@ void generateMaze(char** maze, int rows, int columns, int itemNumber, tuple<int,
 		}
 	}
 	int minotaurIndex = rand() % possibleMinotaurPositions.size();
-	tuple<int, int> minotaurPosition = possibleMinotaurPositions[minotaurIndex];
-	maze[get<0>(minotaurPosition)][get<1>(minotaurPosition)] = 'M';
-	
+	tuple<int, int> minotaurCaurrentPosition = possibleMinotaurPositions[minotaurIndex];
+	maze[get<0>(minotaurCaurrentPosition)][get<1>(minotaurCaurrentPosition)] = 'M';
+
+	minotaurPosition = minotaurCaurrentPosition;
+
 
 	// Generisanje predmeta
 	int currentItems = 0;

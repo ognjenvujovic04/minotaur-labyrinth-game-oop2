@@ -1,6 +1,7 @@
 #include <iostream>
 #include <conio.h>
 #include <windows.h>
+#include <vector>
 #include "Game.h"
 #include "Maze.h"
 #include "maze_generator.h"
@@ -37,9 +38,7 @@ void Game::start() {
 			else if (command == 'w' || command == 'a' || command == 's' || command == 'd') {
 				try {
 					handleRobotMovement(command);
-					cout << endl;
-					// todo kretanje minotaura
-					//maze.handleMinotaurMovement();
+					handleMinotaurMovement();
 					break;
 				}
 				catch (const char* msg) {
@@ -146,9 +145,64 @@ void Game::handleRobotMovement(char command) {
 		maze.mazeMatrix[newX][newY] = 'R';
 		maze.robotPosition = make_tuple(newX, newY);
 	}
+}
 
-		
+void Game::handleMinotaurMovement() {
+	int x, y;
+	x = get<0>(maze.minotaurPosition);
+	y = get<1>(maze.minotaurPosition);
 
+	int newX, newY;
+	newX = x;
+	newY = y;
 
+	// Provjera da li je robot u blizini
+	bool foundRobot = false;
 
+	// Pravljenje vectora mogucih polja i nesumican izbor novog polja
+	vector<tuple<int, int>> possibleMoves;
+	if (!maze.isWall(x - 1, y)) {
+		if (maze.mazeMatrix[x - 1][y] == 'R') {
+			foundRobot = true;
+			newX = x - 1;
+		}
+		possibleMoves.push_back(make_tuple(x - 1, y));
+	}
+	if (!maze.isWall(x + 1, y)) {
+		if (maze.mazeMatrix[x + 1][y] == 'R') {
+			foundRobot = true;
+			newX = x + 1;
+		}
+		possibleMoves.push_back(make_tuple(x + 1, y));
+	}
+	if (!maze.isWall(x, y - 1)) {
+		if (maze.mazeMatrix[x][y - 1] == 'R') {
+			foundRobot = true;
+			newY = y - 1;
+		}
+		possibleMoves.push_back(make_tuple(x, y - 1));
+	}
+	if (!maze.isWall(x, y + 1)) {
+		if (maze.mazeMatrix[x][y + 1] == 'R') {
+			foundRobot = true;
+			newY = y + 1;
+		}
+		possibleMoves.push_back(make_tuple(x, y + 1));
+	}
+
+	if (foundRobot) {
+		//todo zapis stanja
+		maze.mazeMatrix[x][y] = '.';
+		maze.mazeMatrix[newX][newY] = 'M';
+		cout << endl << endl << "Izgubili ste!" << endl;
+		gameOver = true;
+	}
+	else {
+		//todo random
+		int random = rand() % possibleMoves.size();
+		maze.mazeMatrix[x][y] = '.';
+		maze.mazeMatrix[get<0>(possibleMoves[random])][get<1>(possibleMoves[random])] = 'M';
+		maze.minotaurPosition = possibleMoves[random];
+
+	}
 }

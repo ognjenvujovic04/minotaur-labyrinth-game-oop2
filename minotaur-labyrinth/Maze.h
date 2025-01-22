@@ -12,6 +12,7 @@ public:
 	int rows;
 	int columns;
 	tuple<int, int> robotPosition;
+	tuple<int, int> minotaurPosition;
 
 	Maze();
 	Maze(int pRows, int pColumns, int pItemNumber);

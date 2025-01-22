@@ -12,7 +12,7 @@ private:
 	bool gameOver;
 	
 	void handleRobotMovement(char command); // Obrada unosa korisnika za robota
-	//void handleMinotaurMovement();         // Generisanje poteza Minotaura
+	void handleMinotaurMovement();         // Generisanje poteza Minotaura
 	//void handleItemPickup();               // Obrada podizanja predmeta
 
 public:
