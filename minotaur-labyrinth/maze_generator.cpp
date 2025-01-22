@@ -149,6 +149,8 @@ char** generateMaze(int rows, int columns, int itemNumber) {
 	
 	// Posjecena polja
 	set<tuple<int, int>> visited;
+
+	tuple<int, int> start;
 	// todo Vrijeme genersianja putanje	
 	// Unutrasnji zidovi i put
 	maze = generateInternalWalls(maze, rows, columns, visited);
@@ -163,14 +165,40 @@ char** generateMaze(int rows, int columns, int itemNumber) {
 			else {
 				cout << maze[i][j];
 			}
+			if (maze[i][j] == 'R') {
+				start = make_tuple(i, j);
+			}
 		}
 		cout << endl;
 	}
 	// Minotaur todo
-	//int minotaurX = rand() % (rows - 2) + 1;
-	//int minotaurY = rand() % (columns - 2) + 1;
-	//maze[minotaurX][minotaurY] = 'M';
+	// napraviti novi vektor possible minotaur positions iz visited-a na tako da je udaljenost od starta
+	//veca od 3
+	vector<tuple<int, int>> possibleMinotaurPositions;
+	for (auto it = visited.begin(); it != visited.end(); it++) {
+		if (abs(get<0>(*it) - get<0>(start)) + abs(get<1>(*it) - get<1>(start)) > 3) {
+			possibleMinotaurPositions.push_back(*it);
+		}
+	}
+	int minotaurIndex = rand() % possibleMinotaurPositions.size();
+	tuple<int, int> minotaurPosition = possibleMinotaurPositions[minotaurIndex];
+	maze[get<0>(minotaurPosition)][get<1>(minotaurPosition)] = 'M';
 	
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < columns; j++) { 
+			if (make_tuple(i, j) == minotaurPosition) {
+				cout << "\033[1;31m" << maze[i][j] << "\033[0m";
+			}
+			else if (make_tuple(i, j) == start) {
+				cout << "\033[1;34m" << maze[i][j] << "\033[0m";
+			}
+			else {
+				cout << maze[i][j];
+			}
+		}
+		cout << endl;
+	}
+
 	// Predmeti todo
 	/*for (int i = 0; i < itemNumber; i++) {
 		int itemX = rand() % (rows - 2) + 1;
