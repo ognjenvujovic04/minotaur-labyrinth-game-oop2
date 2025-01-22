@@ -128,12 +128,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="game.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Maze.cpp" />
     <ClCompile Include="maze_generator.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="game.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Maze.h" />
     <ClInclude Include="maze_generator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

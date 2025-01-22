@@ -1,7 +1,7 @@
 #include <iostream>
 #include <windows.h>
 #include "maze_generator.h"
-#include "game.h"
+#include "Game.h"
 
 using namespace std;
 
@@ -54,9 +54,10 @@ void welcome(int& columns, int& rows, int& item_number) {
 int main(){
 	int columns, rows, item_number;
 
-	//welcome(columns, rows, item_number);
+	welcome(columns, rows, item_number);
 	
-	Game game = Game(10, 10, 5);
+	Game game = Game(columns, rows, item_number);	
+	cout << "game initialized";
 	game.start();
 
 }

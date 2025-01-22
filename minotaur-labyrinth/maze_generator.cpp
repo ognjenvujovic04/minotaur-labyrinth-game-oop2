@@ -6,15 +6,6 @@
 
 using namespace std;
 
-void printMaze(char** const maze, int columns, int rows) {
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < columns; j++) {
-			cout << maze[i][j];
-		}
-		cout << endl;
-	}
-}
-
 char** generateEmptyMaze(char** maze, int rows, int columns, tuple<int,int> &start) {
 	// Spoljasnji zidovi
 	for (int i = 0; i < rows; i++) {
@@ -65,8 +56,9 @@ char** generateEmptyMaze(char** maze, int rows, int columns) {
 
 
 char** generateInternalWalls(char** maze, int rows, int columns, set<tuple<int, int>> &pVisited) {
-	// Provjera da li postoji putanja od ulaza do izlaza i zapis u path
-	cout << "Usao u funkciju" << endl;
+	//Provjera da li postoji putanja od ulaza do izlaza i zapis u path
+	
+
 	// Pocetna lokacija robota
 	tuple<int, int> start;
 
@@ -170,6 +162,7 @@ char** generateMaze(int rows, int columns, int itemNumber) {
 		}
 		cout << endl;
 	}
+	cout << endl;
 
 	// Minotaur
 	// Pravi vektor polja na kojima moze biti minotaur
@@ -209,7 +202,7 @@ char** generateMaze(int rows, int columns, int itemNumber) {
 	// Ispis vremena generisanja u sekundima
 	clock_t end = clock();
 	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
-	cout << "Vrijeme generisanja: " << elapsed_secs << "s" << endl;
+	cout << endl << "Vrijeme generisanja: " << elapsed_secs << "s" << endl << endl;
 	return maze;
 }
 

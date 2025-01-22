@@ -1,20 +1,18 @@
 #include <iostream>
-#include "game.h"
+#include "Game.h"
+#include "Maze.h"
 #include "maze_generator.h"
 
 using namespace std;
 
 Game::Game(int pRows, int pColumns, int pItemNumber) {
 	itemNumber = pItemNumber;
-	mazeMatrix = generateMaze(pColumns, pRows, pItemNumber);
+	maze = Maze(pColumns, pRows, pItemNumber);
 	gameOver = false;
 }
 
 Game::~Game() {
-	for (int i = 0; i < sizeof(mazeMatrix); i++) {
-		delete[] mazeMatrix[i];
-	}
-	delete[] mazeMatrix;
+	//todo
 }
 
 void Game::start() {
@@ -41,13 +39,13 @@ void Game::quit() {
 
 void Game::displayGameState() {
 	// todo ispis mape
-	for (int i = 0; i < sizeof(mazeMatrix); i++) {
+	/*for (int i = 0; i < sizeof(maze); i++) {
 		for (int j = 0; j < sizeof(mazeMatrix[i]); j++) {
 			cout << mazeMatrix[i][j]<< " ";
 		}
 		cout << endl;
 	}
-	cout << endl;
+	cout << endl;*/
 	//ispist broja predmeta i aktivnih predmeta
 	cout << "Broj predmeta: " << itemNumber << endl;
 	//todo ispis aktivnih predmeta i duzinu trajanja
@@ -55,12 +53,14 @@ void Game::displayGameState() {
 }
 
 string Game::getMazeString() {
-	string mazeString = "";
+	//todo
+	/*string mazeString = "";
 	for (int i = 0; i < sizeof(mazeMatrix); i++) {
 		for (int j = 0; j < sizeof(mazeMatrix[i]); j++) {
 			mazeString += mazeMatrix[i][j];
 		}
 		mazeString += "\n";
 	}
-	return mazeString;
+	return mazeString;*/
+	return "todo";
 }

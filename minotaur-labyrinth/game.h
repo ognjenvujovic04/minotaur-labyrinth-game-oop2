@@ -1,10 +1,11 @@
 #pragma once
+#include "Maze.h"
 
 using namespace std;
 
 class Game {
 private:
-	char** mazeMatrix;
+	Maze maze;
 	int itemNumber;
 	//Robot robot;
 	//Minotaur minotaur;
