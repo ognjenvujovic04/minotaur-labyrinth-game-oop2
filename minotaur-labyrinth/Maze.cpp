@@ -109,6 +109,22 @@ bool Maze::canMinotaurMoveTo(int x, int y) {
 	return true;
 }
 
+void Maze::moveRobot(int x, int y) {
+	mazeMatrix[get<0>(robotPosition)][get<1>(robotPosition)] = '.';
+	mazeMatrix[x][y] = 'R';
+	robotPosition = make_tuple(x, y);
+}
+
+void Maze::moveMinotaur(int x, int y) {
+	mazeMatrix[get<0>(minotaurPosition)][get<1>(minotaurPosition)] = '.';
+	mazeMatrix[x][y] = 'M';
+	minotaurPosition = make_tuple(x, y);
+}
+
+void Maze::brakeWall(int x, int y) {
+	mazeMatrix[x][y] = '.';
+}
+
 char** Maze::getMazeMatrix() {
 	return mazeMatrix;
 }
