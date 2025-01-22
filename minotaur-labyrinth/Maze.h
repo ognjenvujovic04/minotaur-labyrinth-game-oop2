@@ -18,7 +18,7 @@ public:
 	Maze(int pRows, int pColumns, int pItemNumber);
 	~Maze();
 
-	void printMaze();
+	void printMaze(bool isFogActive);
 	bool isWall(int x, int y);
 };
 

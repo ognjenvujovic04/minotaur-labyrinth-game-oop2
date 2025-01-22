@@ -26,7 +26,6 @@ Game::~Game() {
 
 void Game::refresh() {
 	system("CLS");
-	displayGameState();
 	for (Item* item : items) {
 		if (item->getDuration() == 0) {
 			// todo mozda i nece trebati ako svaki put ucitavam efekte
@@ -36,11 +35,9 @@ void Game::refresh() {
 		}
 		else {
 			item->decreaseDuration();
-			item->applyEffect();
 		}
-
-
 	}
+	displayGameState();
 }
 
 void Game::start() {
@@ -102,8 +99,19 @@ void Game::quit() {
 
 void Game::displayGameState() {
 	cout << "Stanje igre:" << endl;
+
+	// Provera da li je aktivna magla rata
+	bool isFogActive = false;
+	for (const Item* item : items) {
+		if (item->getType() == FOG && item->getDuration() > 0) {
+			isFogActive = true;
+			break;
+		}
+	}
+
 	// Ispis mape
-	maze.printMaze();
+	maze.printMaze(isFogActive);
+
 	// Ispis aktivnih predmeta i duzinu trajanja
 	cout << endl << "Broj predmeta: " << itemNumber << endl;
 	cout << "Aktivni predmeti: " << endl;

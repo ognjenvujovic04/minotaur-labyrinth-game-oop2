@@ -37,7 +37,7 @@ Maze::~Maze() {
 	}
 }
 
-void Maze::printMaze() {
+void Maze::printMaze(bool isFogActive) {
 	if (!mazeMatrix) {
 		cerr << "Maze matrix is null before calling printMaze!" << endl;
 		return;
@@ -48,6 +48,12 @@ void Maze::printMaze() {
 
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < columns; j++) {
+			if (isFogActive) {
+				if (i < get<0>(robotPosition) - 1 || i > get<0>(robotPosition) + 1 || j < get<1>(robotPosition) - 1 || j > get<1>(robotPosition) + 1) {
+					cout << "*";
+					continue;
+				}
+			}
 			if (mazeMatrix[i][j] == 'U') {
 				std::cout << "\033[36m" << mazeMatrix[i][j] << "\033[0m";
 			}
