@@ -134,7 +134,7 @@ void Game::displayGameState() {
 				cout << "Cekic: ";
 				break;
 		}
-		cout << "Trajanje: " << items[i]->getDuration() << endl;
+		cout << "Trajanje: " << items[i]->getDuration() + 1 << endl;
 	}
 
 }
@@ -204,9 +204,7 @@ void Game::handleRobotMovement(char command) {
 		if (maze.mazeMatrix[newX][newY] == 'P') {
 			int random = rand() % 4;
 			Item* item;
-			// todo vracanje na staro samo testiranje maca
-			item = new ShieldItem();
-			/*switch (random) {
+			switch (random) {
 				case 0:
 					item = new FogItem();
 					break;
@@ -219,7 +217,7 @@ void Game::handleRobotMovement(char command) {
 				case 3:
 					item = new HammerItem();
 					break;
-			}*/
+			}
 			items.push_back(item);
 			itemNumber--;
 		}
@@ -277,7 +275,8 @@ void Game::handleMinotaurMovement() {
 
 	// Pravljenje vectora mogucih polja i nesumican izbor novog polja
 	vector<tuple<int, int>> possibleMoves;
-	if (!maze.isWall(x - 1, y)) {
+	// todo mozda napravit funkciju za ovo jer se ponavlja
+	if (!maze.isWall(x - 1, y) && maze.mazeMatrix[x - 1][y] != 'I' && maze.mazeMatrix[x - 1][y] != 'U') {
 		if (maze.mazeMatrix[x - 1][y] == 'R') {
 			if (!isShieldActive) {
 				foundRobot = true;
@@ -289,7 +288,7 @@ void Game::handleMinotaurMovement() {
 			possibleMoves.push_back(make_tuple(x - 1, y));
 		}
 	}
-	if (!maze.isWall(x + 1, y)) {
+	if (!maze.isWall(x + 1, y) && maze.mazeMatrix[x + 1][y] != 'I' && maze.mazeMatrix[x + 1][y] != 'U') {
 		if (maze.mazeMatrix[x + 1][y] == 'R') {
 			if (!isShieldActive) {
 				foundRobot = true;
@@ -301,7 +300,7 @@ void Game::handleMinotaurMovement() {
 			possibleMoves.push_back(make_tuple(x + 1, y));
 		}
 	}
-	if (!maze.isWall(x, y - 1)) {
+	if (!maze.isWall(x, y - 1) && maze.mazeMatrix[x][y - 1] != 'I' && maze.mazeMatrix[x][y - 1] != 'U') {
 		if (maze.mazeMatrix[x][y - 1] == 'R') {
 			if (!isShieldActive) {
 				foundRobot = true;
@@ -313,7 +312,7 @@ void Game::handleMinotaurMovement() {
 			possibleMoves.push_back(make_tuple(x, y - 1));
 		}
 	}
-	if (!maze.isWall(x, y + 1)) {
+	if (!maze.isWall(x, y + 1) && maze.mazeMatrix[x][y + 1] != 'I' && maze.mazeMatrix[x][y + 1] != 'U') {
 		if (maze.mazeMatrix[x][y + 1] == 'R') {
 			if (!isShieldActive) {
 				foundRobot = true;
