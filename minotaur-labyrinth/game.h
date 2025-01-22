@@ -10,6 +10,7 @@ private:
 	Maze maze;
 	int itemNumber;
 	bool gameOver;
+	bool isMinotaurAlive;
 	vector<Item*> items;
 	
 	void handleRobotMovement(char command); // Obrada unosa korisnika za robota

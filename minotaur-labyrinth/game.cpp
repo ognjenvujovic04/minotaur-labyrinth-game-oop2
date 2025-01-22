@@ -17,7 +17,8 @@ Game::Game(int pRows, int pColumns, int pItemNumber)
 	: itemNumber(pItemNumber),
 	maze(pColumns, pRows, pItemNumber),
 	gameOver(false),
-	items(){ }
+	items(), 
+	isMinotaurAlive(true){ }
 	
 
 Game::~Game() {
@@ -61,7 +62,10 @@ void Game::start() {
 			else if (command == 'w' || command == 'a' || command == 's' || command == 'd') {
 				try {
 					handleRobotMovement(command);
-					handleMinotaurMovement();
+					// todo popravljanje refreshe rate
+					if (isMinotaurAlive) {
+						handleMinotaurMovement();
+					}
 					break;
 				}
 				catch (const char* msg) {
@@ -183,7 +187,9 @@ void Game::handleRobotMovement(char command) {
 		if (maze.mazeMatrix[newX][newY] == 'P') {
 			int random = rand() % 4;
 			Item* item;
-			switch (random) {
+			// todo vracanje na staro samo testiranje maca
+			item = new SwordItem();
+			/*switch (random) {
 				case 0:
 					item = new FogItem();
 					break;
@@ -196,7 +202,7 @@ void Game::handleRobotMovement(char command) {
 				case 3:
 					item = new HammerItem();
 					break;
-			}
+			}*/
 			items.push_back(item);
 			itemNumber--;
 		}
@@ -207,11 +213,25 @@ void Game::handleRobotMovement(char command) {
 			//todo zapis stanja
 			cout << endl << endl << "Pobjeda!" << endl;
 			gameOver = true;
+		} if (maze.mazeMatrix[newX][newY] == 'M') {
+			for (Item* item : items) {
+				if (item->getType() == SWORD && item->getDuration() > 0) {
+					// Ubijen minotaur
+					isMinotaurAlive = false;
+					maze.mazeMatrix[x][y] = '.';
+					maze.mazeMatrix[newX][newY] = 'R';
+					maze.robotPosition = make_tuple(newX, newY);
+					return;
+				}
+			}
+
 		}
-		// Postavljanje nove pozicije robota
-		maze.mazeMatrix[x][y] = '.';
-		maze.mazeMatrix[newX][newY] = 'R';
-		maze.robotPosition = make_tuple(newX, newY);
+		else {
+			// Postavljanje nove pozicije robota
+			maze.mazeMatrix[x][y] = '.';
+			maze.mazeMatrix[newX][newY] = 'R';
+			maze.robotPosition = make_tuple(newX, newY);
+		}	
 	}
 }
 
@@ -263,7 +283,7 @@ void Game::handleMinotaurMovement() {
 		//todo zapis stanja
 		maze.mazeMatrix[x][y] = '.';
 		maze.mazeMatrix[newX][newY] = 'M';
-		cout << endl << endl << "Izgubili ste!" << endl;
+		cout << endl << endl << "Izgubili ste, pojeo vas je minotaur!" << endl;
 		gameOver = true;
 	}
 	else {
