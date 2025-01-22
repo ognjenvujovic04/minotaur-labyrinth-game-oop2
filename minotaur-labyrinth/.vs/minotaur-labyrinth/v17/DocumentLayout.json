@@ -7,16 +7,16 @@
       "RelativeMoniker": "D:0:0:{6429DA05-EDEE-4190-B8A0-923A4F50AC30}|minotaur-labyrinth.vcxproj|solutionrelative:Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{6429DA05-EDEE-4190-B8A0-923A4F50AC30}|minotaur-labyrinth.vcxproj|C:\\Users\\ognje\\Desktop\\faks\\semestar_3\\OOP 2\\projekat\\minotaur-labyrinth-git\\minotaur-labyrinth\\Maze.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{6429DA05-EDEE-4190-B8A0-923A4F50AC30}|minotaur-labyrinth.vcxproj|solutionrelative:Maze.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{6429DA05-EDEE-4190-B8A0-923A4F50AC30}|minotaur-labyrinth.vcxproj|C:\\Users\\ognje\\Desktop\\faks\\semestar_3\\OOP 2\\projekat\\minotaur-labyrinth-git\\minotaur-labyrinth\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{6429DA05-EDEE-4190-B8A0-923A4F50AC30}|minotaur-labyrinth.vcxproj|solutionrelative:Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6429DA05-EDEE-4190-B8A0-923A4F50AC30}|minotaur-labyrinth.vcxproj|C:\\Users\\ognje\\Desktop\\faks\\semestar_3\\OOP 2\\projekat\\minotaur-labyrinth-git\\minotaur-labyrinth\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{6429DA05-EDEE-4190-B8A0-923A4F50AC30}|minotaur-labyrinth.vcxproj|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6429DA05-EDEE-4190-B8A0-923A4F50AC30}|minotaur-labyrinth.vcxproj|C:\\Users\\ognje\\Desktop\\faks\\semestar_3\\OOP 2\\projekat\\minotaur-labyrinth-git\\minotaur-labyrinth\\Maze.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{6429DA05-EDEE-4190-B8A0-923A4F50AC30}|minotaur-labyrinth.vcxproj|solutionrelative:Maze.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6429DA05-EDEE-4190-B8A0-923A4F50AC30}|minotaur-labyrinth.vcxproj|C:\\Users\\ognje\\Desktop\\faks\\semestar_3\\OOP 2\\projekat\\minotaur-labyrinth-git\\minotaur-labyrinth\\FogItem.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -50,7 +50,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Game.h",
               "DocumentMoniker": "C:\\Users\\ognje\\Desktop\\faks\\semestar_3\\OOP 2\\projekat\\minotaur-labyrinth-git\\minotaur-labyrinth\\Game.h",
               "RelativeDocumentMoniker": "Game.h",
@@ -63,7 +63,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "main.cpp",
               "DocumentMoniker": "C:\\Users\\ognje\\Desktop\\faks\\semestar_3\\OOP 2\\projekat\\minotaur-labyrinth-git\\minotaur-labyrinth\\main.cpp",
               "RelativeDocumentMoniker": "main.cpp",
@@ -76,7 +76,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Maze.cpp",
               "DocumentMoniker": "C:\\Users\\ognje\\Desktop\\faks\\semestar_3\\OOP 2\\projekat\\minotaur-labyrinth-git\\minotaur-labyrinth\\Maze.cpp",
               "RelativeDocumentMoniker": "Maze.cpp",
@@ -121,7 +121,7 @@
               "RelativeDocumentMoniker": "Game.cpp",
               "ToolTip": "C:\\Users\\ognje\\Desktop\\faks\\semestar_3\\OOP 2\\projekat\\minotaur-labyrinth-git\\minotaur-labyrinth\\Game.cpp",
               "RelativeToolTip": "Game.cpp",
-              "ViewState": "AgIAAC0AAAAAAAAAAAApwEMAAAAGAAAAAAAAAA==",
+              "ViewState": "AgIAAK4AAAAAAAAAAAApwMEAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-01-22T18:41:51.285Z",
               "EditorCaption": ""

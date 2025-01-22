@@ -179,7 +179,24 @@ void Game::handleRobotMovement(char command) {
 
 	// Provjera da li je na novoj poziciji zid
 	if (maze.isWall(newX, newY)) {
-		throw "Na toj poziciji se nalazi zid!";
+		// Da li je aktiviran cekic
+		bool isHammerActive = false;
+		for (Item* item : items) {
+			if (item->getType() == HAMMER && item->getDuration() > 0) {
+				isHammerActive = true;
+				break;
+			}
+		}
+		if (!isHammerActive) {
+			throw "Na toj poziciji se nalazi zid!";
+		}
+		else if (newX == 0 || newY == 0 || newX == maze.rows - 1 || newY == maze.columns - 1) {
+			throw "Spoljasnji zidovi ne mogu biti razbijeni!";
+		}
+		else {
+			// Razbijanje zida
+			maze.mazeMatrix[newX][newY] = '.';
+		}
 	}
 	else {
 		// Provjera da li je na novoj poziciji predmet
@@ -188,7 +205,7 @@ void Game::handleRobotMovement(char command) {
 			int random = rand() % 4;
 			Item* item;
 			// todo vracanje na staro samo testiranje maca
-			item = new SwordItem();
+			item = new HammerItem();
 			/*switch (random) {
 				case 0:
 					item = new FogItem();
