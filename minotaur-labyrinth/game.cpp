@@ -41,7 +41,7 @@ void Game::displayGameState() {
 	// Ispis mape
 	maze.printMaze();
 	// Ispis broja predmeta i aktivnih predmeta
-	cout << "Broj predmeta: " << itemNumber << endl;
+	cout << endl << "Broj predmeta: " << itemNumber << endl;
 	//todo ispis aktivnih predmeta i duzinu trajanja
 
 }

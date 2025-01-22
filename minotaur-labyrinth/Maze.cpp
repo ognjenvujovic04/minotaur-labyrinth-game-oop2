@@ -41,12 +41,13 @@ void Maze::printMaze() {
 		return;
 	}
 
-	// Ulaz je smedje boje, izlaz je zelene boje, robot je plave a minotaur crvene
+	// Ulaz je smedje boje, izlaz je zelene boje, robot je plave boje
+	// Minotaur je crvene boje, a predmeti su zute boje
 
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < columns; j++) {
 			if (mazeMatrix[i][j] == 'U') {
-				std::cout << "\033[33m" << mazeMatrix[i][j] << "\033[0m";
+				std::cout << "\033[36m" << mazeMatrix[i][j] << "\033[0m";
 			}
 			else if (mazeMatrix[i][j] == 'I') {
 				std::cout << "\033[32m" << mazeMatrix[i][j] << "\033[0m";
@@ -56,6 +57,9 @@ void Maze::printMaze() {
 			}
 			else if (mazeMatrix[i][j] == 'M') {
 				std::cout << "\033[31m" << mazeMatrix[i][j] << "\033[0m";
+			}
+			else if (mazeMatrix[i][j] == 'P') {
+				std::cout << "\033[33m" << mazeMatrix[i][j] << "\033[0m";
 			}
 			else {
 				std::cout << mazeMatrix[i][j];

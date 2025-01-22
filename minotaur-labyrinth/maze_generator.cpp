@@ -144,12 +144,16 @@ void generateMaze(char** maze, int rows, int columns, int itemNumber) {
 	maze[get<0>(minotaurPosition)][get<1>(minotaurPosition)] = 'M';
 	
 
-	// Predmeti todo
-	/*for (int i = 0; i < itemNumber; i++) {
+	// Generisanje predmeta
+	int currentItems = 0;
+	while (currentItems != itemNumber) {
 		int itemX = rand() % (rows - 2) + 1;
 		int itemY = rand() % (columns - 2) + 1;
-		maze[itemX][itemY] = 'P';
-	}*/
+		if (maze[itemX][itemY] == '.') {
+			maze[itemX][itemY] = 'P';
+			currentItems++;
+		}
+	}
 
 	// Ispis vremena generisanja u sekundima
 	clock_t end = clock();
