@@ -133,6 +133,14 @@ void Game::handleRobotMovement(char command) {
 		if (maze.mazeMatrix[newX][newY] == 'P') {
 			itemNumber--;
 		}
+		else if (maze.mazeMatrix[newX][newY] == 'U') {
+			throw "Na toj poziciji se nalazi ulaz!";
+		} 
+		else if (maze.mazeMatrix[newX][newY] == 'I') {
+			//todo zapis stanja
+			cout << endl << endl << "Pobjeda!" << endl;
+			gameOver = true;
+		}
 		// Postavljanje nove pozicije robota
 		maze.mazeMatrix[x][y] = '.';
 		maze.mazeMatrix[newX][newY] = 'R';
