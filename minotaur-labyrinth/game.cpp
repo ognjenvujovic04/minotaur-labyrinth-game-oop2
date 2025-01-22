@@ -205,7 +205,7 @@ void Game::handleRobotMovement(char command) {
 			int random = rand() % 4;
 			Item* item;
 			// todo vracanje na staro samo testiranje maca
-			item = new HammerItem();
+			item = new ShieldItem();
 			/*switch (random) {
 				case 0:
 					item = new FogItem();
@@ -254,6 +254,7 @@ void Game::handleRobotMovement(char command) {
 
 // Funkcija za generisanje poteza Minotaura
 void Game::handleMinotaurMovement() {
+	//todo bug fix minotaur jede izlaz ulaz
 	int x, y;
 	x = get<0>(maze.minotaurPosition);
 	y = get<1>(maze.minotaurPosition);
@@ -262,6 +263,15 @@ void Game::handleMinotaurMovement() {
 	newX = x;
 	newY = y;
 
+	// Provjera da li je stit aktivan
+	bool isShieldActive = false;
+	for (Item* item : items) {
+		if (item->getType() == SHIELD && item->getDuration() > 0) {
+			isShieldActive = true;
+			break;
+		}
+	}
+
 	// Provjera da li je robot u blizini
 	bool foundRobot = false;
 
@@ -269,31 +279,51 @@ void Game::handleMinotaurMovement() {
 	vector<tuple<int, int>> possibleMoves;
 	if (!maze.isWall(x - 1, y)) {
 		if (maze.mazeMatrix[x - 1][y] == 'R') {
-			foundRobot = true;
-			newX = x - 1;
+			if (!isShieldActive) {
+				foundRobot = true;
+				newX = x - 1;
+				possibleMoves.push_back(make_tuple(x - 1, y));
+			}
 		}
-		possibleMoves.push_back(make_tuple(x - 1, y));
+		else {
+			possibleMoves.push_back(make_tuple(x - 1, y));
+		}
 	}
 	if (!maze.isWall(x + 1, y)) {
 		if (maze.mazeMatrix[x + 1][y] == 'R') {
-			foundRobot = true;
-			newX = x + 1;
+			if (!isShieldActive) {
+				foundRobot = true;
+				newX = x + 1;
+				possibleMoves.push_back(make_tuple(x + 1, y));
+			}
 		}
-		possibleMoves.push_back(make_tuple(x + 1, y));
+		else {
+			possibleMoves.push_back(make_tuple(x + 1, y));
+		}
 	}
 	if (!maze.isWall(x, y - 1)) {
 		if (maze.mazeMatrix[x][y - 1] == 'R') {
-			foundRobot = true;
-			newY = y - 1;
+			if (!isShieldActive) {
+				foundRobot = true;
+				newY = y - 1;
+				possibleMoves.push_back(make_tuple(x, y - 1));
+			}
 		}
-		possibleMoves.push_back(make_tuple(x, y - 1));
+		else {
+			possibleMoves.push_back(make_tuple(x, y - 1));
+		}
 	}
 	if (!maze.isWall(x, y + 1)) {
 		if (maze.mazeMatrix[x][y + 1] == 'R') {
-			foundRobot = true;
-			newY = y + 1;
+			if (!isShieldActive) {
+				foundRobot = true;
+				newY = y + 1;
+				possibleMoves.push_back(make_tuple(x, y + 1));
+			}
 		}
-		possibleMoves.push_back(make_tuple(x, y + 1));
+		else {
+			possibleMoves.push_back(make_tuple(x, y + 1));
+		}
 	}
 
 	if (foundRobot) {
@@ -304,6 +334,7 @@ void Game::handleMinotaurMovement() {
 		gameOver = true;
 	}
 	else {
+		//todo sta ako satjeram minotaura u cosak
 		int random = rand() % possibleMoves.size();
 		maze.mazeMatrix[x][y] = '.';
 		maze.mazeMatrix[get<0>(possibleMoves[random])][get<1>(possibleMoves[random])] = 'M';
