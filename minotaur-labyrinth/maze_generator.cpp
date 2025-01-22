@@ -6,7 +6,7 @@
 
 using namespace std;
 
-char** generateEmptyMaze(char** maze, int rows, int columns, tuple<int,int> &start) {
+void generateEmptyMaze(char** maze, int rows, int columns, tuple<int,int> &start) {
 	// Spoljasnji zidovi
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < columns; j++) {
@@ -27,10 +27,9 @@ char** generateEmptyMaze(char** maze, int rows, int columns, tuple<int,int> &sta
 	int exit = rand() % (columns - 2) + 1;
 	maze[rows - 1][exit] = 'I';
 
-	return maze;
 }
 
-char** generateEmptyMaze(char** maze, int rows, int columns) {
+void generateEmptyMaze(char** maze, int rows, int columns) {
 	// Spoljasnji zidovi
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < columns; j++) {
@@ -50,12 +49,11 @@ char** generateEmptyMaze(char** maze, int rows, int columns) {
 	int exit = rand() % (columns - 2) + 1;
 	maze[rows - 1][exit] = 'I';
 
-	return maze;
 }
 
 
 
-char** generateInternalWalls(char** maze, int rows, int columns, set<tuple<int, int>> &pVisited) {
+void generateInternalWalls(char** maze, int rows, int columns, set<tuple<int, int>> &pVisited) {
 	//Provjera da li postoji putanja od ulaza do izlaza i zapis u path
 	
 
@@ -64,7 +62,7 @@ char** generateInternalWalls(char** maze, int rows, int columns, set<tuple<int, 
 
 	// Generisanje zidova i provjera da li postoji putanja
 	while (true) {
-		maze = generateEmptyMaze(maze, rows, columns, start);
+		generateEmptyMaze(maze, rows, columns, start);
 		// todo ne samo minimalno
 		int wallNumber = (rows + columns) * 2;
 		//int wallNumber = (rows + columns) * 2 + rand() % ((rows + columns) / 2);
@@ -116,26 +114,20 @@ char** generateInternalWalls(char** maze, int rows, int columns, set<tuple<int, 
 			pVisited = visited;
 			break;
 		}
-
 	}
-
-
-	return maze;
 }
 
 
-char** generateMaze(int rows, int columns, int itemNumber) {
+//char** generateMaze(int rows, int columns, int itemNumber) {
+void generateMaze(char** maze, int rows, int columns, int itemNumber) {
 	// Mjerenje vremena generisanja
 	clock_t begin = clock();
 
 	// Uzimanje random seed-a
 	srand(time(0));
-	char** maze = new char* [rows];
-	for (int i = 0; i < rows; i++) {
-		maze[i] = new char[columns];
-	}
+
 	// Prazan lavirint
-	maze = generateEmptyMaze(maze, rows, columns);
+	generateEmptyMaze(maze, rows, columns);
 	
 	
 	// Posjecena polja
@@ -144,11 +136,11 @@ char** generateMaze(int rows, int columns, int itemNumber) {
 	tuple<int, int> start;
 	// todo Vrijeme genersianja putanje	
 	// Unutrasnji zidovi i put
-	maze = generateInternalWalls(maze, rows, columns, visited);
+	generateInternalWalls(maze, rows, columns, visited);
 
 	// Ispis stanja maze-a ali visited polja su zelene boje
 
-	for (int i = 0; i < rows; i++) {
+	/*for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < columns; j++) {
 			if (visited.find(make_tuple(i, j)) != visited.end()) {
 				cout << "\033[1;32m" << maze[i][j] << "\033[0m";
@@ -162,7 +154,7 @@ char** generateMaze(int rows, int columns, int itemNumber) {
 		}
 		cout << endl;
 	}
-	cout << endl;
+	cout << endl;*/
 
 	// Minotaur
 	// Pravi vektor polja na kojima moze biti minotaur
@@ -177,20 +169,6 @@ char** generateMaze(int rows, int columns, int itemNumber) {
 	tuple<int, int> minotaurPosition = possibleMinotaurPositions[minotaurIndex];
 	maze[get<0>(minotaurPosition)][get<1>(minotaurPosition)] = 'M';
 	
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < columns; j++) { 
-			if (make_tuple(i, j) == minotaurPosition) {
-				cout << "\033[1;31m" << maze[i][j] << "\033[0m";
-			}
-			else if (make_tuple(i, j) == start) {
-				cout << "\033[1;34m" << maze[i][j] << "\033[0m";
-			}
-			else {
-				cout << maze[i][j];
-			}
-		}
-		cout << endl;
-	}
 
 	// Predmeti todo
 	/*for (int i = 0; i < itemNumber; i++) {
@@ -203,6 +181,5 @@ char** generateMaze(int rows, int columns, int itemNumber) {
 	clock_t end = clock();
 	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
 	cout << endl << "Vrijeme generisanja: " << elapsed_secs << "s" << endl << endl;
-	return maze;
 }
 

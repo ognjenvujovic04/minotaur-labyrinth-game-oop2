@@ -16,6 +16,8 @@ public:
 	Maze();
 	Maze(int pRows, int pColumns, int pItemNumber);
 	~Maze();
+
+	void printMaze();
 };
 
 #pragma once

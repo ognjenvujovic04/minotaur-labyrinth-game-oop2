@@ -56,8 +56,8 @@ int main(){
 
 	welcome(columns, rows, item_number);
 	
-	Game game = Game(columns, rows, item_number);	
-	cout << "game initialized";
+	Game game(columns, rows, item_number);	
+
 	game.start();
 
 }

@@ -4,10 +4,10 @@
 
 using namespace std;
 
-char** generateMaze(int rows, int columns, int itemNumber);
+void generateMaze(char** mazeMatrix, int rows, int columns, int itemNumber);
 
-char** generateEmptyMaze(char** maze, int rows, int columns, tuple<int, int>& start);
+void generateEmptyMaze(char** maze, int rows, int columns, tuple<int, int>& start);
 
-char** generateEmptyMaze(char** maze, int rows, int columns);
+void generateEmptyMaze(char** maze, int rows, int columns);
 
-char** generateInternalWalls(char** maze, int rows, int columns, set<tuple<int, int>> &visited);
+void generateInternalWalls(char** maze, int rows, int columns, set<tuple<int, int>> &visited);
