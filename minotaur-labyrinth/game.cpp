@@ -147,8 +147,8 @@ string Game::getMazeString() {
 void Game::handleRobotMovement(char command) {
 	// Trenutna pozicija robota
 	int x, y;
-	x = get<0>(maze.robotPosition);
-	y = get<1>(maze.robotPosition);
+	x = get<0>(maze.getRobotPosition());
+	y = get<1>(maze.getRobotPosition());
 
 	// Nova pozicija robota
 	int newX, newY;
@@ -181,17 +181,17 @@ void Game::handleRobotMovement(char command) {
 		if (!isHammerActive) {
 			throw "Na toj poziciji se nalazi zid!";
 		}
-		else if (newX == 0 || newY == 0 || newX == maze.rows - 1 || newY == maze.columns - 1) {
+		else if (newX == 0 || newY == 0 || newX == maze.getRows() - 1 || newY == maze.getColumns() - 1) {
 			throw "Spoljasnji zidovi ne mogu biti razbijeni!";
 		}
 		else {
 			// Razbijanje zida
-			maze.mazeMatrix[newX][newY] = '.';
+			maze.getMazeMatrix()[newX][newY] = '.';
 		}
 	}
 	else {
 		// Provjera da li je na novoj poziciji predmet
-		if (maze.mazeMatrix[newX][newY] == 'P') {
+		if (maze.getMazeMatrix()[newX][newY] == 'P') {
 			int random = rand() % 4;
 			Item* item;
 			switch (random) {
@@ -211,21 +211,21 @@ void Game::handleRobotMovement(char command) {
 			items.push_back(item);
 			itemNumber--;
 		}
-		else if (maze.mazeMatrix[newX][newY] == 'U') {
+		else if (maze.getMazeMatrix()[newX][newY] == 'U') {
 			throw "Na toj poziciji se nalazi ulaz!";
 		} 
-		else if (maze.mazeMatrix[newX][newY] == 'I') {
+		else if (maze.getMazeMatrix()[newX][newY] == 'I') {
 			//todo zapis stanja
 			cout << endl << endl << "Pobjeda!" << endl;
 			gameOver = true;
-		} if (maze.mazeMatrix[newX][newY] == 'M') {
+		} if (maze.getMazeMatrix()[newX][newY] == 'M') {
 			for (Item* item : items) {
 				if (item->getType() == SWORD && item->getDuration() > 0) {
 					// Ubijen minotaur
 					isMinotaurAlive = false;
-					maze.mazeMatrix[x][y] = '.';
-					maze.mazeMatrix[newX][newY] = 'R';
-					maze.robotPosition = make_tuple(newX, newY);
+					maze.getMazeMatrix()[x][y] = '.';
+					maze.getMazeMatrix()[newX][newY] = 'R';
+					maze.setRobotPosition(tuple<int, int>(newX, newY));
 					return;
 				}
 			}
@@ -233,9 +233,9 @@ void Game::handleRobotMovement(char command) {
 		}
 		else {
 			// Postavljanje nove pozicije robota
-			maze.mazeMatrix[x][y] = '.';
-			maze.mazeMatrix[newX][newY] = 'R';
-			maze.robotPosition = make_tuple(newX, newY);
+			maze.getMazeMatrix()[x][y] = '.';
+			maze.getMazeMatrix()[newX][newY] = 'R';
+			maze.setRobotPosition(tuple<int, int>(newX, newY));
 		}	
 	}
 }
@@ -243,8 +243,8 @@ void Game::handleRobotMovement(char command) {
 // Funkcija za generisanje poteza Minotaura
 void Game::handleMinotaurMovement() {
 	int x, y;
-	x = get<0>(maze.minotaurPosition);
-	y = get<1>(maze.minotaurPosition);
+	x = get<0>(maze.getMinotaurPosition());
+	y = get<1>(maze.getMinotaurPosition());
 
 	int newX, newY;
 	newX = x;
@@ -267,7 +267,7 @@ void Game::handleMinotaurMovement() {
 
 
 	if (maze.canMinotaurMoveTo(x - 1, y)) {
-		if (maze.mazeMatrix[x - 1][y] == 'R') {
+		if (maze.getMazeMatrix()[x - 1][y] == 'R') {
 			if (!isShieldActive) {
 				foundRobot = true;
 				newX = x - 1;
@@ -279,7 +279,7 @@ void Game::handleMinotaurMovement() {
 		}
 	}
 	if (maze.canMinotaurMoveTo(x + 1, y)) {
-		if (maze.mazeMatrix[x + 1][y] == 'R') {
+		if (maze.getMazeMatrix()[x + 1][y] == 'R') {
 			if (!isShieldActive) {
 				foundRobot = true;
 				newX = x + 1;
@@ -291,7 +291,7 @@ void Game::handleMinotaurMovement() {
 		}
 	}
 	if (maze.canMinotaurMoveTo(x, y - 1)) {
-		if (maze.mazeMatrix[x][y - 1] == 'R') {
+		if (maze.getMazeMatrix()[x][y - 1] == 'R') {
 			if (!isShieldActive) {
 				foundRobot = true;
 				newY = y - 1;
@@ -303,7 +303,7 @@ void Game::handleMinotaurMovement() {
 		}
 	}
 	if (maze.canMinotaurMoveTo(x, y + 1)) {
-		if (maze.mazeMatrix[x][y + 1] == 'R') {
+		if (maze.getMazeMatrix()[x][y + 1] == 'R') {
 			if (!isShieldActive) {
 				foundRobot = true;
 				newY = y + 1;
@@ -317,17 +317,17 @@ void Game::handleMinotaurMovement() {
 
 	if (foundRobot) {
 		//todo zapis stanja
-		maze.mazeMatrix[x][y] = '.';
-		maze.mazeMatrix[newX][newY] = 'M';
+		maze.getMazeMatrix()[x][y] = '.';
+		maze.getMazeMatrix()[newX][newY] = 'M';
 		cout << endl << endl << "Izgubili ste, pojeo vas je minotaur!" << endl;
 		gameOver = true;
 	}
 	else {
 		//todo sta ako satjeram minotaura u cosak
 		int random = rand() % possibleMoves.size();
-		maze.mazeMatrix[x][y] = '.';
-		maze.mazeMatrix[get<0>(possibleMoves[random])][get<1>(possibleMoves[random])] = 'M';
-		maze.minotaurPosition = possibleMoves[random];
+		maze.getMazeMatrix()[x][y] = '.';
+		maze.getMazeMatrix()[get<0>(possibleMoves[random])][get<1>(possibleMoves[random])] = 'M';
+		maze.setMinotaurPosition(possibleMoves[random]);
 
 	}
 }

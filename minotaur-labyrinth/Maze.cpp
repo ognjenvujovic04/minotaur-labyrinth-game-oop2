@@ -108,3 +108,35 @@ bool Maze::canMinotaurMoveTo(int x, int y) {
 	}
 	return true;
 }
+
+char** Maze::getMazeMatrix() {
+	return mazeMatrix;
+}
+
+int Maze::getRows() {
+	return rows;
+}
+
+int Maze::getColumns() {
+	return columns;
+}
+
+int Maze::getItemNumber() {
+	return itemNumber;
+}
+
+tuple<int, int> Maze::getRobotPosition() {
+	return robotPosition;
+}
+
+tuple<int, int> Maze::getMinotaurPosition() {
+	return minotaurPosition;
+}
+
+void Maze::setRobotPosition(tuple<int, int> newPosition) {
+	robotPosition = newPosition;
+}
+
+void Maze::setMinotaurPosition(tuple<int, int> newPosition) {
+	minotaurPosition = newPosition;
+}

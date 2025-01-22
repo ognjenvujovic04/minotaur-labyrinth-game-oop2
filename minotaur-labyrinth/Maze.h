@@ -6,8 +6,7 @@
 using namespace std;
 
 class Maze {
-	//todo private geteri seteri
-public:
+private:
 	char** mazeMatrix;
 	int itemNumber;
 	int rows;
@@ -15,9 +14,21 @@ public:
 	tuple<int, int> robotPosition;
 	tuple<int, int> minotaurPosition;
 
+public:
 	Maze();
 	Maze(int pRows, int pColumns, int pItemNumber);
 	~Maze();
+
+	char** getMazeMatrix();
+	int getRows();
+	int getColumns();
+	int getItemNumber();
+	tuple<int, int> getRobotPosition();
+	tuple<int, int> getMinotaurPosition();
+
+	void setRobotPosition(tuple<int, int> newPosition);
+	void setMinotaurPosition(tuple<int, int> newPosition);
+
 
 	void printMaze(bool isFogActive);
 	string toString();
