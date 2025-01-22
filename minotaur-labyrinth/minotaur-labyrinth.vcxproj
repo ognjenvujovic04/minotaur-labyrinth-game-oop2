@@ -128,15 +128,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FogItem.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="HammerItem.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Maze.cpp" />
     <ClCompile Include="maze_generator.cpp" />
+    <ClCompile Include="ShieldItem.cpp" />
+    <ClCompile Include="SwordItem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FogItem.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="HammerItem.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="Maze.h" />
     <ClInclude Include="maze_generator.h" />
+    <ClInclude Include="ShieldItem.h" />
+    <ClInclude Include="SwordItem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

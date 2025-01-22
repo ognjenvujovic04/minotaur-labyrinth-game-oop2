@@ -3,6 +3,11 @@
 #include <windows.h>
 #include <vector>
 #include "Game.h"
+#include "Item.h"
+#include "FogItem.h"
+#include "SwordItem.h"
+#include "ShieldItem.h"
+#include "HammerItem.h"
 #include "Maze.h"
 #include "maze_generator.h"
 
@@ -11,7 +16,9 @@ using namespace std;
 Game::Game(int pRows, int pColumns, int pItemNumber)
 	: itemNumber(pItemNumber),
 	maze(pColumns, pRows, pItemNumber),
-	gameOver(false) {}
+	gameOver(false),
+	items(){ }
+	
 
 Game::~Game() {
 	//todo
@@ -78,9 +85,26 @@ void Game::displayGameState() {
 	cout << "Stanje igre:" << endl;
 	// Ispis mape
 	maze.printMaze();
-	// Ispis broja predmeta i aktivnih predmeta
+	// Ispis aktivnih predmeta i duzinu trajanja
 	cout << endl << "Broj predmeta: " << itemNumber << endl;
-	//todo ispis aktivnih predmeta i duzinu trajanja
+	cout << "Aktivni predmeti: " << endl;
+	for (int i = 0; i < items.size(); i++) {
+		switch (items[i]->getType()) {
+			case FOG:
+				cout << "Magla rata: ";
+				break;
+			case SWORD:
+				cout << "Mac: ";
+				break;
+			case SHIELD:
+				cout << "Stit: ";
+				break;
+			case HAMMER:
+				cout << "Cekic: ";
+				break;
+		}
+		cout << "Trajanje: " << items[i]->getDuration() << endl;
+	}
 
 }
 
@@ -130,6 +154,23 @@ void Game::handleRobotMovement(char command) {
 		// Provjera da li je na novoj poziciji predmet
 		// todo efekat predmeta
 		if (maze.mazeMatrix[newX][newY] == 'P') {
+			int random = rand() % 4;
+			Item* item;
+			switch (random) {
+				case 0:
+					item = new FogItem();
+					break;
+				case 1:
+					item = new SwordItem();
+					break;
+				case 2:
+					item = new ShieldItem();
+					break;
+				case 3:
+					item = new HammerItem();
+					break;
+			}
+			items.push_back(item);
 			itemNumber--;
 		}
 		else if (maze.mazeMatrix[newX][newY] == 'U') {
@@ -147,6 +188,7 @@ void Game::handleRobotMovement(char command) {
 	}
 }
 
+// Funkcija za generisanje poteza Minotaura
 void Game::handleMinotaurMovement() {
 	int x, y;
 	x = get<0>(maze.minotaurPosition);
@@ -198,7 +240,6 @@ void Game::handleMinotaurMovement() {
 		gameOver = true;
 	}
 	else {
-		//todo random
 		int random = rand() % possibleMoves.size();
 		maze.mazeMatrix[x][y] = '.';
 		maze.mazeMatrix[get<0>(possibleMoves[random])][get<1>(possibleMoves[random])] = 'M';
