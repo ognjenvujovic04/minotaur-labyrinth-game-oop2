@@ -133,12 +133,11 @@ char** generateInternalWalls(char** maze, int rows, int columns, set<tuple<int, 
 
 
 char** generateMaze(int rows, int columns, int itemNumber) {
+	// Mjerenje vremena generisanja
+	clock_t begin = clock();
+
+	// Uzimanje random seed-a
 	srand(time(0));
-	//todo dupla provjera zbog warninga, osmisliti da li error propagation ili nesto drugo
-	/*if (rows < 3 || columns < 3) {
-		cout << "Maze dimensions must be at least 3x3!" << endl;
-		return nullptr;
-	}*/
 	char** maze = new char* [rows];
 	for (int i = 0; i < rows; i++) {
 		maze[i] = new char[columns];
@@ -171,9 +170,10 @@ char** generateMaze(int rows, int columns, int itemNumber) {
 		}
 		cout << endl;
 	}
-	// Minotaur todo
-	// napraviti novi vektor possible minotaur positions iz visited-a na tako da je udaljenost od starta
-	//veca od 3
+
+	// Minotaur
+	// Pravi vektor polja na kojima moze biti minotaur
+	// gdje je minimalna udaljenost od robota 3 bloka
 	vector<tuple<int, int>> possibleMinotaurPositions;
 	for (auto it = visited.begin(); it != visited.end(); it++) {
 		if (abs(get<0>(*it) - get<0>(start)) + abs(get<1>(*it) - get<1>(start)) > 3) {
@@ -205,6 +205,11 @@ char** generateMaze(int rows, int columns, int itemNumber) {
 		int itemY = rand() % (columns - 2) + 1;
 		maze[itemX][itemY] = 'P';
 	}*/
+
+	// Ispis vremena generisanja u sekundima
+	clock_t end = clock();
+	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+	cout << "Vrijeme generisanja: " << elapsed_secs << "s" << endl;
 	return maze;
 }
 
