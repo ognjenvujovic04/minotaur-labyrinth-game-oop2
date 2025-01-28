@@ -1,11 +1,15 @@
 #include <iostream>
 #include <ctime>
 #include <set>
-#include <queue>
+#include <stack>
+#include <vector>
 #include "maze_generator.h"
 
 using namespace std;
 
+// todo mozda bolji nacin za generisanje zidova
+
+// Funkcija za generisanje praznog lavirinta
 void generateEmptyMaze(char** maze, int rows, int columns, tuple<int,int> &start) {
 	// Spoljasnji zidovi
 	for (int i = 0; i < rows; i++) {
@@ -29,13 +33,15 @@ void generateEmptyMaze(char** maze, int rows, int columns, tuple<int,int> &start
 
 }
 
-
+// Generisanje zidova i provjera postojanja putanje pomocu DFS-a
 void generateWalls(char** maze, int rows, int columns, set<tuple<int, int>> &pVisited, tuple<int, int> &pStart) {
 	// Pocetna lokacija robota
 	tuple<int, int> start;
 
+	int counter = 0;
 	// Generisanje zidova i provjera da li postoji putanja
 	while (true) {
+
 		generateEmptyMaze(maze, rows, columns, start);
 		// todo ne samo minimalno
 		int wallNumber = (rows + columns) * 2;
@@ -49,17 +55,18 @@ void generateWalls(char** maze, int rows, int columns, set<tuple<int, int>> &pVi
 			maze[wallX][wallY] = '#';
 			wallNumber--;
 		}
+
 		// Provjera postojanja putanje
 		bool pathExists = true;
 		set<tuple<int, int>> visited;
-		queue<tuple<int, int>> toVisit;
+		stack<tuple<int, int>> toVisit;
 		toVisit.push(start);
 		while (true) {
 			if (toVisit.empty()) {
 				pathExists = false;
 				break;
 			}
-			tuple<int, int> current = toVisit.front();
+			tuple<int, int> current = toVisit.top();
 			toVisit.pop();
 			visited.insert(current);
 			int x = get<0>(current);
