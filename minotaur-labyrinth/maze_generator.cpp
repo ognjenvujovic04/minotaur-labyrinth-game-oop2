@@ -1,8 +1,9 @@
-#include <iostream>
+﻿#include <iostream>
 #include <ctime>
 #include <set>
 #include <stack>
 #include <vector>
+#include <windows.h>
 #include "maze_generator.h"
 
 using namespace std;
@@ -10,7 +11,7 @@ using namespace std;
 // todo mozda bolji nacin za generisanje zidova
 
 // Funkcija za generisanje praznog lavirinta
-void generateEmptyMaze(char** maze, int rows, int columns, tuple<int,int> &start) {
+void generateEmptyMaze(char** maze, int rows, int columns, tuple<int,int> &start, tuple<int, int> &end) {
 	// Spoljasnji zidovi
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < columns; j++) {
@@ -30,22 +31,22 @@ void generateEmptyMaze(char** maze, int rows, int columns, tuple<int,int> &start
 	// Izlaz
 	int exit = rand() % (columns - 2) + 1;
 	maze[rows - 1][exit] = 'I';
-
+	end = make_tuple(rows - 1, exit);
 }
 
 // Generisanje zidova i provjera postojanja putanje pomocu DFS-a
-void generateWalls(char** maze, int rows, int columns, set<tuple<int, int>> &pVisited, tuple<int, int> &pStart) {
-	// Pocetna lokacija robota
-	tuple<int, int> start;
+void generateWalls(char** maze, int rows, int columns, set<tuple<int, int>> &pVisited, tuple<int, int>& pStart) {
+	// Pocetna lokacija robota i izlaza
+	tuple<int, int> start, end;
 
-	int counter = 0;
 	// Generisanje zidova i provjera da li postoji putanja
 	while (true) {
 
-		generateEmptyMaze(maze, rows, columns, start);
+		generateEmptyMaze(maze, rows, columns, start, end);
 		// todo ne samo minimalno
-		int wallNumber = (rows + columns) * 2;
-		//int wallNumber = (rows + columns) * 2 + rand() % ((rows + columns) / 2);
+		//int wallNumber = (rows + columns) * 2;
+		int wallNumber = (rows + columns) * 2 + rand() % ((rows + columns));
+		
 		while (wallNumber != 0) {
 			int wallX = rand() % (rows - 2) + 1;
 			int wallY = rand() % (columns - 2) + 1;
@@ -120,22 +121,25 @@ void generateMaze(char** maze, int rows, int columns, int itemNumber, tuple<int,
 
 	// Ispis stanja maze-a ali visited polja su zelene boje
 
-	/*for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < columns; j++) {
-			if (visited.find(make_tuple(i, j)) != visited.end()) {
-				cout << "\033[1;32m" << maze[i][j] << "\033[0m";
-			}
-			else {
-				cout << maze[i][j];
-			}
-			if (maze[i][j] == 'R') {
-				start = make_tuple(i, j);
-			}
-		}
-		cout << endl;
-	}
-	cout << endl;*/
+	//for (int i = 0; i < rows; i++) {
+	//	for (int j = 0; j < columns; j++) {
+	//		if (visited.find(make_tuple(i, j)) != visited.end()) {
+	//			cout << "\033[1;32m" << maze[i][j] << "\033[0m";
+	//		}
+	//		else {
+	//			cout << maze[i][j];
+	//		}
+	//		if (maze[i][j] == 'R') {
+	//			start = make_tuple(i, j);
+	//		}
+	//	}
+	//	cout << endl;
+	//}
+	//cout << endl;
 
+	//int input;
+	//cin >> input;
+	
 	// Minotaur
 	// Pravi vektor polja na kojima moze biti minotaur
 	// gdje je minimalna udaljenost od robota 3 bloka
@@ -167,5 +171,6 @@ void generateMaze(char** maze, int rows, int columns, int itemNumber, tuple<int,
 	clock_t end = clock();
 	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
 	cout << endl << "Vrijeme generisanja: " << elapsed_secs << "s" << endl << endl;
+	Sleep(3000);
 }
 

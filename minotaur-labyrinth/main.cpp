@@ -54,9 +54,9 @@ void welcome(int& columns, int& rows, int& item_number) {
 int main(){
 	int columns, rows, item_number;
 
-	//welcome(columns, rows, item_number);
+	welcome(columns, rows, item_number);
 	
-	Game game(20, 15, 10);	
+	Game game(columns, rows, item_number);	
 
 	game.start();
 

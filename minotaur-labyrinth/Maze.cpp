@@ -25,7 +25,6 @@ Maze::Maze() {
 }
 
 Maze::~Maze() {
-	cout << "Maze destructor called" << endl;
 	if (mazeMatrix != nullptr) {
 		for (int i = 0; i < rows; i++) {
 			if (mazeMatrix[i] != nullptr) {
