@@ -21,6 +21,12 @@ This is a simple console-based game developed as a project for the **OOP2** cour
 4. Avoid or defeat the minotaur to survive.
 5. Solve the puzzle and reach the exit.
 
+## Screenshots
+<p align="left">
+    <img src="assets/Screenshot 2025-02-24 173850.png" height="300" >
+    <img src="assets/Screenshot 2025-02-24 173908.png" height="300" >
+</p>
+
 ## Future Plans
 - Implement a **GUI version** for a better user experience.
 - Improve the **maze generation algorithm** to create more challenging layouts.
@@ -32,9 +38,6 @@ This is a simple console-based game developed as a project for the **OOP2** cour
    ```
 2. Compile and run the project.
 3. Follow the on-screen instructions to play.
-
-## Contributions
-Contributions are not welcome at the moment.
 
 ## License
 This project is licensed under the MIT License.
