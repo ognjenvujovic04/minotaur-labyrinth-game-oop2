@@ -5,37 +5,59 @@
 
 using namespace std;
 
+
+// Funkcija za brisanje greske unosa
+void clearInputError() {
+	cin.clear();
+	cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
+}
+
 // Funkcija dobrodoslice koja uzima broj kolona, redova i predmeta od korisnika
 void welcome(int& columns, int& rows, int& item_number) {
 	cout << "Dobrodosli u igricu bjeg iz lavirinta u Knososu!" << endl << endl;
 
 	while (true) {
 		cout << "Unesite broj kolona: ";
-		cin >> columns;
+		if (!(cin >> columns)) {
+			cout << "Pogresan unos! Molimo vas unesite prirodan broj." << endl;
+			clearInputError();
+			continue;
+		}
 		cout << "Unesite broj redova: ";
-		cin >> rows;
-		if (rows < 7 || columns < 7) {
-			cout << "Dimenzije lavirinta moraju biti barem 7x7!" << endl;
+		if (!(cin >> rows)) {
+			cout << "Pogresan unos! Molimo vas unesite prirodan broj." << endl;
+			clearInputError();
+			cin.clear();
+			continue;
 		}
-		else {
-			break;
+		if (rows < 15 || columns < 15) {
+			cout << "Dimenzije lavirinta moraju biti barem 15x15!" << endl;
+			continue;
 		}
+		break;
+		
 	}
+
 	while (true) {
-		cout << "Unesite broj predmeta: ";
-		cin >> item_number;
+		cout << "\nUnesite broj predmeta: ";
+		if (!(cin >> item_number)) {
+			cout << "Pogresan unos! Molimo vas unesite prirodan broj." << endl;
+			clearInputError();
+			continue;
+		}
 		// Broj polja u lavirintu je (columns - 1) * (rows - 1), oduzimam 2 za robota i minotaura, 
-		// i oduzimam (columns + rows) * 2 jer je to minilani broj blokoava
+		// i oduzimam (columns + rows) * 2 jer je to minimalan broj blokoava
 		if (item_number > ((columns - 1) * (rows - 1) - 2) - ((columns + rows) * 2)) {
 			cout << "Broj predmeta ne moze biti veci od broja slobodnih polja lavirinta!" << endl;
-			cout << ((columns - 1) * (rows - 1) - 2) - ((columns + rows) * 2);
+			cout << "Broj slobodnih polja:" << ((columns - 1) * (rows - 1) - 2) - ((columns + rows) * 2);
+			continue;
 		}
 		else if (item_number < 4) {
 			cout << "Broj predmeta mora biti veci od 3!" << endl;
+			continue;
 		}
-		else {
-			break;
-		}
+		break;
+		
 	}
 	/*cout << endl << "Igra pocinje za 3!" << endl;
 	Sleep(1000);
