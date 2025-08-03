@@ -143,7 +143,7 @@ void Game::displayGameState() {
 
 }
 
-string Game::getMazeString() {
+string Game::getMazeString() const{
 	return maze.toString();
 }
 
@@ -276,6 +276,7 @@ void Game::handleMinotaurMovement() {
 		if (maze.getMazeMatrix()[x - 1][y] == 'R') {
 			if (!isShieldActive) {
 				foundRobot(x, y, x - 1, y);
+				return;
 			}
 		}
 		else {
@@ -286,6 +287,7 @@ void Game::handleMinotaurMovement() {
 		if (maze.getMazeMatrix()[x + 1][y] == 'R') {
 			if (!isShieldActive) {
 				foundRobot(x, y, x + 1, y);
+				return;
 			}
 		}
 		else {
@@ -296,6 +298,7 @@ void Game::handleMinotaurMovement() {
 		if (maze.getMazeMatrix()[x][y - 1] == 'R') {
 			if (!isShieldActive) {
 				foundRobot(x, y, x, y - 1);
+				return;
 			}
 		}
 		else {
@@ -306,6 +309,7 @@ void Game::handleMinotaurMovement() {
 		if (maze.getMazeMatrix()[x][y + 1] == 'R') {
 			if (!isShieldActive) {
 				foundRobot(x, y, x, y + 1);
+				return;
 			}
 		}
 		else {
@@ -330,14 +334,18 @@ void Game::handleMinotaurMovement() {
 	}
 }
 
-Maze& Game::getMaze() {
-	return maze;
-}
-
 int Game::getItemNumber() {
 	return itemNumber;
 }
 
 bool Game::getResult() {
 	return isWon;
+}
+
+tuple<int, int> Game::getRobotPosition() const {
+	return maze.getRobotPosition();
+}
+
+tuple<int, int> Game::getMinotaurPosition() const {
+	return maze.getMinotaurPosition();
 }

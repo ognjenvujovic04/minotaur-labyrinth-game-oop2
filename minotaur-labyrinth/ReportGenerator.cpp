@@ -39,9 +39,8 @@ std::string ReportGenerator::getMazeStateString(Game& game) {
 }
 
 std::string ReportGenerator::getPositionsString(Game& game) {
-    Maze& maze = game.getMaze();
-    tuple<int,int> robotPos = maze.getRobotPosition();
-    tuple<int, int> minotaurPos = maze.getMinotaurPosition();
+    tuple<int,int> robotPos = game.getRobotPosition();
+    tuple<int, int> minotaurPos = game.getMinotaurPosition();
 
 	string result;
 

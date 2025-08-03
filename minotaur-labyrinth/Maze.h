@@ -17,12 +17,12 @@ public:
 	Maze(int pRows, int pColumns, int pItemNumber);
 	~Maze();
 
-	char** getMazeMatrix();
-	int getRows();
-	int getColumns();
-	int getItemNumber();
-	std::tuple<int, int> getRobotPosition();
-	std::tuple<int, int> getMinotaurPosition();
+	char** getMazeMatrix() const;
+	int getRows() const;
+	int getColumns() const;
+	int getItemNumber() const;
+	std::tuple<int, int> getRobotPosition() const;
+	std::tuple<int, int> getMinotaurPosition() const;
 
 	void setRobotPosition(std::tuple<int, int> newPosition);
 	void setMinotaurPosition(std::tuple<int, int> newPosition);
@@ -31,9 +31,9 @@ public:
 	void moveMinotaur(int x, int y);
 	void brakeWall(int x, int y);
 
-	void printMaze(bool isFogActive);
-	std::string toString();
-	bool isWall(int x, int y);
-	bool canMinotaurMoveTo(int x, int y);
+	void printMaze(bool isFogActive) const;
+	std::string toString() const;
+	bool isWall(int x, int y) const;
+	bool canMinotaurMoveTo(int x, int y) const;
 
 };

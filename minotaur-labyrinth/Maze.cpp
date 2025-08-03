@@ -37,7 +37,7 @@ Maze::~Maze() {
 	}
 }
 
-void Maze::printMaze(bool isFogActive) {
+void Maze::printMaze(bool isFogActive) const{
 	if (!mazeMatrix) {
 		cerr << "Maze matrix is null before calling printMaze!" << endl;
 		return;
@@ -78,7 +78,7 @@ void Maze::printMaze(bool isFogActive) {
 
 }
 
-string Maze::toString() {
+string Maze::toString() const{
 	string retString = "";
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < columns; j++) {
@@ -89,7 +89,7 @@ string Maze::toString() {
 	return retString;
 }
 
-bool Maze::isWall(int x, int y) {
+bool Maze::isWall(int x, int y) const{
 	if (x < 0 || x >= rows || y < 0 || y >= columns) {
 		return true;
 	}
@@ -99,7 +99,7 @@ bool Maze::isWall(int x, int y) {
 	return false;
 }
 
-bool Maze::canMinotaurMoveTo(int x, int y) {
+bool Maze::canMinotaurMoveTo(int x, int y) const{
 	if (x < 0 || x >= rows || y < 0 || y >= columns) {
 		return false;
 	}
@@ -125,27 +125,27 @@ void Maze::brakeWall(int x, int y) {
 	mazeMatrix[x][y] = '.';
 }
 
-char** Maze::getMazeMatrix() {
+char** Maze::getMazeMatrix() const{
 	return mazeMatrix;
 }
 
-int Maze::getRows() {
+int Maze::getRows() const{
 	return rows;
 }
 
-int Maze::getColumns() {
+int Maze::getColumns() const{
 	return columns;
 }
 
-int Maze::getItemNumber() {
+int Maze::getItemNumber() const{
 	return itemNumber;
 }
 
-tuple<int, int> Maze::getRobotPosition() {
+tuple<int, int> Maze::getRobotPosition() const{
 	return robotPosition;
 }
 
-tuple<int, int> Maze::getMinotaurPosition() {
+tuple<int, int> Maze::getMinotaurPosition() const{
 	return minotaurPosition;
 }
 

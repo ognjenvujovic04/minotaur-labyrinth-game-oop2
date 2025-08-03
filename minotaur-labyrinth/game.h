@@ -30,9 +30,10 @@ public:
 	void refresh();
 	void quit();
 	void displayGameState();
-	std::string getMazeString();
+	std::string getMazeString() const;
 
-	Maze& getMaze();
+	std::tuple<int, int> getRobotPosition() const;
+	std::tuple<int, int> getMinotaurPosition() const;
 	int getItemNumber();
 	bool getResult();
 	
