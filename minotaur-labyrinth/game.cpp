@@ -218,7 +218,10 @@ void Game::handleRobotMovement(char command) {
 			throw "Na toj poziciji se nalazi ulaz!";
 		} 
 		else if (maze[newX][newY] == 'I') {
-			cout << endl << endl << "Pobjeda!" << endl;
+			// Robot je stigao do izlaza
+			cout << endl << endl << "Uspjesno ste stigli do izlaza iz lavirinta!" << endl;
+			Sleep(1000);
+			maze.moveRobot(newX, newY);
 			gameOver = true;
 			isWon = true;
 		} 

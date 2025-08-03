@@ -5,49 +5,51 @@
 
 using namespace std;
 
-void ReportGenerator::generateReport( Game& game, const std::string& filename) {
+void ReportGenerator::generateReport(Game& game, const std::string& filename) {
     std::ofstream reportFile(filename);
 
     if (!reportFile.is_open()) {
-        cerr << "Error: Could not create report file!" << std::endl;
+        cerr << "Greska: Nije moguce kreirati izvestaj!" << std::endl;
         return;
     }
 
-    reportFile << "=== MAZE GAME FINAL REPORT ===\n\n";
+    reportFile << "=== KONACNI IZVESTAJ IGRICE===\n\n";
 
-    reportFile << "=== MAZE STATE ===\n";
+    reportFile << "=== STANJE LAVIRINTA ===\n";
     reportFile << getMazeStateString(game) << "\n";
 
-    reportFile << "=== POSITIONS ===\n";
+    reportFile << "=== POZICIJE ===\n";
     reportFile << getPositionsString(game) << "\n";
 
-    reportFile << "=== ITEMS COUNT ===\n";
+    reportFile << "=== BROJ PREDMETA ===\n";
     reportFile << getItemsString(game) << "\n";
 
-    reportFile << "=== GAME RESULT ===\n";
+    reportFile << "=== REZULTAT IGRE ===\n";
     if (game.getResult()) {
-        reportFile << "Player reached the exit and won the game!\n";
-    } else {
-		reportFile << "Player did not reach the exit and lost the game.\n";
+        reportFile << "Igrac je stigao do izlaza i pobedio!\n";
+    }
+    else {
+        reportFile << "Igrac nije stigao do izlaza i izgubio je igru.\n";
     }
 
     reportFile.close();
     system("CLS");
-	//print the report to console
-    cout << "Report generated successfully: " << filename << endl;
-    cout << "=== MAZE GAME FINAL REPORT ===\n\n";
-    cout << "=== MAZE STATE ===\n";
+    // Ispis na konzolu
+    cout << "Izvestaj uspesno generisan: " << filename << endl;
+    cout << "\n=== KONACNI IZVESTAJ IGRICE LAVIRINT ===\n\n";
+    cout << "=== STANJE LAVIRINTA ===\n";
     cout << getMazeStateString(game) << "\n";
-    cout << "=== POSITIONS ===\n";
+    cout << "=== POZICIJE ===\n";
     cout << getPositionsString(game) << "\n";
-    cout << "=== ITEMS COUNT ===\n";
+    cout << "=== BROJ PREDMETA ===\n";
     cout << getItemsString(game) << "\n";
-    cout << "=== GAME RESULT ===\n";
+    cout << "=== REZULTAT IGRE ===\n";
     if (game.getResult()) {
-        cout << "Player reached the exit and won the game!\n";
-    } else {
-        cout << "Player did not reach the exit and lost the game.\n";
-	}
+        cout << "Igrac je stigao do izlaza i pobedio!\n";
+    }
+    else {
+        cout << "Igrac nije stigao do izlaza i izgubio je igru.\n";
+    }
 }
 
 std::string ReportGenerator::getMazeStateString(Game& game) {
@@ -55,19 +57,27 @@ std::string ReportGenerator::getMazeStateString(Game& game) {
 }
 
 std::string ReportGenerator::getPositionsString(Game& game) {
-    tuple<int,int> robotPos = game.getRobotPosition();
+    tuple<int, int> robotPos = game.getRobotPosition();
     tuple<int, int> minotaurPos = game.getMinotaurPosition();
 
-	string result;
-
-	result += "Robot Position: (" + std::to_string(get<0>(robotPos)) + ", " + std::to_string(get<1>(robotPos)) + ")\n";
-	result += "Minotaur Position: (" + std::to_string(get<0>(minotaurPos)) + ", " + std::to_string(get<1>(minotaurPos)) + ")\n";
-
+    string result;
+    if (get<0>(robotPos) == -1 && get<1>(robotPos) == -1) {
+        result += "Robot je ubijen.\n";
+    }
+    else {
+        result += "Pozicija robota: (" + std::to_string(get<0>(robotPos)) + ", " + std::to_string(get<1>(robotPos)) + ")\n";
+    }
+    if (get<0>(minotaurPos) == -1 && get<1>(minotaurPos) == -1) {
+        result += "Minotaur je ubijen.\n";
+    }
+    else {
+        result += "Pozicija minotaura: (" + std::to_string(get<0>(minotaurPos)) + ", " + std::to_string(get<1>(minotaurPos)) + ")\n";
+    }
     return result;
 }
 
 std::string ReportGenerator::getItemsString(Game& game) {
-	int itemCount = game.getItemNumber();
+    int itemCount = game.getItemNumber();
 
-    return "Total items in maze: " + std::to_string(itemCount) + "\n";
+    return "Ukupan broj predmeta u labirintu: " + std::to_string(itemCount) + "\n";
 }

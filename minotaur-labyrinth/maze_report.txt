@@ -1,29 +1,29 @@
-=== MAZE GAME FINAL REPORT ===
+=== KONACNI IZVESTAJ IGRICE===
 
-=== MAZE STATE ===
-##U#############
-##..#.....##..##
-##.....#..M.P.##
-###....#...P...#
-#.........#....#
-#P.##...##.#...#
-###..#....#..###
-###............#
-#.#...#....#..##
-##.#..##.......#
-###..#..##...###
-#..##.........##
-#.#.##....#....#
-#.P#.P...#P....#
-#..##....##R...#
-###########I####
+=== STANJE LAVIRINTA ===
+###########U####
+#.###.......#.##
+#..#.##..P....##
+#M#...P......#.#
+#.........#.##.#
+###...#P.##....#
+#####......#P..#
+#P..P..#..##..P#
+#..#P#.#......##
+#.#.##..#.#.#..#
+#.#...#....#...#
+#.#.#.#..#..P..#
+###.....#.##..##
+###..........#.#
+#.##..#.#.....##
+#########R######
 
-=== POSITIONS ===
-Robot Position: (14, 11)
-Minotaur Position: (2, 10)
+=== POZICIJE ===
+Pozicija robota: (15, 9)
+Pozicija minotaura: (3, 1)
 
-=== ITEMS COUNT ===
-Total items in maze: 6
+=== BROJ PREDMETA ===
+Ukupan broj predmeta u labirintu: 9
 
-=== GAME RESULT ===
-Player reached the exit and won the game!
+=== REZULTAT IGRE ===
+Igrac je stigao do izlaza i pobedio!
