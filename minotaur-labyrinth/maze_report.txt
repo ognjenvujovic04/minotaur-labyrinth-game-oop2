@@ -1,0 +1,29 @@
+=== MAZE GAME FINAL REPORT ===
+
+=== MAZE STATE ===
+#########U######
+###P....P...#..#
+#....#.P##.#.#.#
+#..P#..###.P.#.#
+#..#....P.....##
+####.#.#...#.###
+#........##P#P.#
+#..#.#..#...####
+#.####..#P##..##
+#P#..#...#....##
+#..#..##..M.#..#
+#..#P##..#.#..##
+##...#..#......#
+##.#####.....#.#
+#..###...R##.#.#
+#########I######
+
+=== POSITIONS ===
+Robot Position: (14, 9)
+Minotaur Position: (10, 10)
+
+=== ITEMS COUNT ===
+Total items in maze: 11
+
+=== GAME RESULT ===
+Player reached the exit and won the game!

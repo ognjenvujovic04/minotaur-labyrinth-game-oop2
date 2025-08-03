@@ -10,6 +10,7 @@
 #include "HammerItem.h"
 #include "Maze.h"
 #include "maze_generator.h"
+#include "ReportGenerator.h"
 
 using namespace std;
 
@@ -17,6 +18,7 @@ Game::Game(int pRows, int pColumns, int pItemNumber)
 	: itemNumber(pItemNumber),
 	maze(pColumns, pRows, pItemNumber),
 	gameOver(false),
+	isWon(false),
 	items(), 
 	isMinotaurAlive(true){ }
 	
@@ -61,9 +63,7 @@ void Game::start() {
 		bool error = false;
 		while (true) {
 			command = tolower(_getch());
-			//todo strijelice
 			if (command == 'q') {
-				//todo zapis stanja
 				cout << "\nIzlaz iz programa..." << endl;
 				gameOver = true;
 				break;
@@ -102,6 +102,7 @@ void Game::start() {
 			}
 		}
 	}
+	ReportGenerator::generateReport(*this);
 }
 		
 
@@ -217,22 +218,23 @@ void Game::handleRobotMovement(char command) {
 			throw "Na toj poziciji se nalazi ulaz!";
 		} 
 		else if (maze.getMazeMatrix()[newX][newY] == 'I') {
-			//todo zapis stanja
 			cout << endl << endl << "Pobjeda!" << endl;
 			gameOver = true;
+			isWon = true;
 		} 
 		else if (maze.getMazeMatrix()[newX][newY] == 'M') {
 			if (isSwordActive) {
 				// Ubijen minotaur
 				isMinotaurAlive = false;
 				maze.moveRobot(newX, newY);
+				maze.setMinotaurPosition(make_tuple(-1, -1)); // Minotaur je ubijen, postavljam ga van lavirinta
 				return;
 			}
 			if (isMinotaurAlive) {
 				gameOver = true;
 				cout << endl << endl << "Napali ste minotaura bez maca, izgubili ste!" << endl;
 				maze.getMazeMatrix()[x][y] = '.';
-				//todo zapis stanja
+				maze.setRobotPosition(make_tuple(-1, -1)); // Robot je izgubio, postavljam ga van lavirinta
 				return;
 			}
 		}
@@ -247,6 +249,8 @@ void Game::handleRobotMovement(char command) {
 void Game::foundRobot(int x, int y, int newX, int newY) {
 	maze.getMazeMatrix()[x][y] = '.';
 	maze.getMazeMatrix()[newX][newY] = 'M';
+	maze.setMinotaurPosition(make_tuple(newX, newY));
+	maze.setRobotPosition(make_tuple(-1, -1)); // Robot je pojeden, postavljam ga van lavirinta
 	cout << endl << endl << "Izgubili ste, pojeo vas je minotaur!" << endl;
 	gameOver = true;
 }
@@ -324,4 +328,16 @@ void Game::handleMinotaurMovement() {
 		maze.getMazeMatrix()[newX][newY] = 'M';
 		maze.setMinotaurPosition(possibleMoves[random]);
 	}
+}
+
+Maze& Game::getMaze() {
+	return maze;
+}
+
+int Game::getItemNumber() {
+	return itemNumber;
+}
+
+bool Game::getResult() {
+	return isWon;
 }

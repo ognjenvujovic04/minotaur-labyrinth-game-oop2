@@ -10,6 +10,7 @@ private:
 	Maze maze;
 	int itemNumber;
 	bool gameOver;
+	bool isWon;
 	bool isMinotaurAlive;
 	vector<Item*> items;
 
@@ -32,5 +33,9 @@ public:
 	void quit();
 	void displayGameState();
 	string getMazeString();
+
+	Maze& getMaze();
+	int getItemNumber();
+	bool getResult();
 	
 };

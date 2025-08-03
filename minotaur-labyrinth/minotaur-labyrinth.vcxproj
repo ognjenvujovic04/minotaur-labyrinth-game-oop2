@@ -136,12 +136,14 @@
     <ClCompile Include="Maze.cpp" />
     <ClCompile Include="maze_generator.cpp" />
     <ClCompile Include="ShieldItem.cpp" />
+    <ClCompile Include="ReportGenerator.cpp" />
     <ClCompile Include="SwordItem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FogItem.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="HammerItem.h" />
+    <ClInclude Include="ReportGenerator.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Maze.h" />
     <ClInclude Include="maze_generator.h" />

@@ -121,24 +121,24 @@ void generateMaze(char** maze, int rows, int columns, int itemNumber, tuple<int,
 
 	// Ispis stanja maze-a ali visited polja su zelene boje
 
-	//for (int i = 0; i < rows; i++) {
-	//	for (int j = 0; j < columns; j++) {
-	//		if (visited.find(make_tuple(i, j)) != visited.end()) {
-	//			cout << "\033[1;32m" << maze[i][j] << "\033[0m";
-	//		}
-	//		else {
-	//			cout << maze[i][j];
-	//		}
-	//		if (maze[i][j] == 'R') {
-	//			start = make_tuple(i, j);
-	//		}
-	//	}
-	//	cout << endl;
-	//}
-	//cout << endl;
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < columns; j++) {
+			if (visited.find(make_tuple(i, j)) != visited.end()) {
+				cout << "\033[1;32m" << maze[i][j] << "\033[0m";
+			}
+			else {
+				cout << maze[i][j];
+			}
+			if (maze[i][j] == 'R') {
+				start = make_tuple(i, j);
+			}
+		}
+		cout << endl;
+	}
+	cout << endl;
 
-	//int input;
-	//cin >> input;
+	int input;
+	cin >> input;
 	
 	// Minotaur
 	// Pravi vektor polja na kojima moze biti minotaur

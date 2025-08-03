@@ -88,6 +88,7 @@ bool validateInputs(int columns, int rows, int item_number) {
 }
 
 int main(int argc, char* argv[]) {
+	// TODO const funckije
     int columns, rows, item_number;
 
     if (argc == 4) {
