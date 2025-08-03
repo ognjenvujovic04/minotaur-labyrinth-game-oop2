@@ -12,9 +12,15 @@ private:
 	bool gameOver;
 	bool isMinotaurAlive;
 	vector<Item*> items;
+
+	bool isFogActive = false;
+	bool isSwordActive = false;
+	bool isShieldActive = false;
+	bool isHammerActive = false;
 	
 	void handleRobotMovement(char command); // Obrada unosa korisnika za robota
 	void handleMinotaurMovement();         // Generisanje poteza Minotaura
+	void foundRobot(int x, int y, int newX, int newY);			// Funkcija za jedenje robota od strane Minotaura
 	//void handleItemPickup();               // Obrada kupljenja predmeta
 
 public:
