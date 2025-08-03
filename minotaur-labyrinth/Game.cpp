@@ -35,8 +35,6 @@ void Game::refresh() {
 
 	for (Item* item : items) {
 		if (item->getDuration() == 0) {
-			// todo mozda i nece trebati ako svaki put ucitavam efekte
-			//item->resetEffect();
 			items.erase(remove(items.begin(), items.end(), item), items.end());
 			delete item;
 		}
