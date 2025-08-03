@@ -36,7 +36,7 @@ void Game::refresh() {
 	isHammerActive = false;
 
 	for (Item* item : items) {
-		if (item->getDuration() == 0) {
+		if (item->getDuration() == -1) {
 			items.erase(remove(items.begin(), items.end(), item), items.end());
 			delete item;
 		}
@@ -121,7 +121,7 @@ void Game::displayGameState() {
 	cout << endl << "Broj predmeta: " << itemNumber << endl;
 	cout << "Aktivni predmeti: " << endl;
 	for (int i = 0; i < items.size(); i++) {
-		if (items[i]->getDuration() > 0) {
+		if (items[i]->getDuration() >= 0) {
 			switch (items[i]->getType()) {
 			case FOG:
 				cout << "Magla rata: ";
