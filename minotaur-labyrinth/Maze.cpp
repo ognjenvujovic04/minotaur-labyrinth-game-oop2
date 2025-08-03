@@ -4,8 +4,7 @@
 
 using namespace std;
 
-Maze::Maze(int pRows, int pColumns, int pItemNumber) {
-	itemNumber = pItemNumber;
+Maze::Maze(int pRows, int pColumns, int itemNumber) {
 	rows = pRows;
 	columns = pColumns;
 	
@@ -13,13 +12,12 @@ Maze::Maze(int pRows, int pColumns, int pItemNumber) {
 	for (int i = 0; i < rows; i++) {
 		mazeMatrix[i] = new char[columns];
 	}
-	generateMaze(mazeMatrix, pRows, pColumns, pItemNumber, robotPosition, minotaurPosition);
+	generateMaze(mazeMatrix, pRows, pColumns, itemNumber, robotPosition, minotaurPosition);
 }
 
 Maze::Maze() {
 	rows = 0;
 	columns = 0;
-	itemNumber = 0;
 	mazeMatrix = nullptr;
 	robotPosition = make_tuple(0, 0);
 	minotaurPosition = make_tuple(0, 0);
@@ -115,18 +113,36 @@ void Maze::moveRobot(int x, int y) {
 	robotPosition = make_tuple(x, y);
 }
 
-void Maze::moveMinotaur(int x, int y) {
+bool Maze::moveMinotaur(int x, int y) {
+	bool ret = false;
 	mazeMatrix[get<0>(minotaurPosition)][get<1>(minotaurPosition)] = '.';
+	if (mazeMatrix[x][y] == 'P'){
+		ret = true; // Minotaur je pojeo predmet
+	}
 	mazeMatrix[x][y] = 'M';
 	minotaurPosition = make_tuple(x, y);
+	return ret;
+}
+
+void Maze::killMinotaur() {
+	mazeMatrix[get<0>(minotaurPosition)][get<1>(minotaurPosition)] = '.';
+	minotaurPosition = make_tuple(-1, -1); // Postavljam minotaura van lavirinta
+}
+
+void Maze::killRobot() {
+	mazeMatrix[get<0>(robotPosition)][get<1>(robotPosition)] = '.';
+	robotPosition = make_tuple(-1, -1); // Postavljam robota van lavirinta
 }
 
 void Maze::brakeWall(int x, int y) {
 	mazeMatrix[x][y] = '.';
 }
 
-char** Maze::getMazeMatrix() const{
-	return mazeMatrix;
+const char* Maze::operator[](int pRow) const {
+	if (pRow < 0 || pRow >= rows) {
+		throw std::out_of_range("Row index out of bounds");
+	}
+	return mazeMatrix[pRow];
 }
 
 int Maze::getRows() const{
@@ -135,10 +151,6 @@ int Maze::getRows() const{
 
 int Maze::getColumns() const{
 	return columns;
-}
-
-int Maze::getItemNumber() const{
-	return itemNumber;
 }
 
 tuple<int, int> Maze::getRobotPosition() const{

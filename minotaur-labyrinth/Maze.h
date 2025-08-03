@@ -14,21 +14,22 @@ private:
 
 public:
 	Maze();
-	Maze(int pRows, int pColumns, int pItemNumber);
+	Maze(int pRows, int pColumns, int itemNumber);
 	~Maze();
 
-	char** getMazeMatrix() const;
 	int getRows() const;
 	int getColumns() const;
-	int getItemNumber() const;
 	std::tuple<int, int> getRobotPosition() const;
 	std::tuple<int, int> getMinotaurPosition() const;
+	const char* operator[](int row) const;
 
 	void setRobotPosition(std::tuple<int, int> newPosition);
 	void setMinotaurPosition(std::tuple<int, int> newPosition);
 
 	void moveRobot(int x, int y);
-	void moveMinotaur(int x, int y);
+	bool moveMinotaur(int x, int y);
+	void killMinotaur();
+	void killRobot();
 	void brakeWall(int x, int y);
 
 	void printMaze(bool isFogActive) const;

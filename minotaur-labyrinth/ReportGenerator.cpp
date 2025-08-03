@@ -32,6 +32,22 @@ void ReportGenerator::generateReport( Game& game, const std::string& filename) {
     }
 
     reportFile.close();
+    system("CLS");
+	//print the report to console
+    cout << "Report generated successfully: " << filename << endl;
+    cout << "=== MAZE GAME FINAL REPORT ===\n\n";
+    cout << "=== MAZE STATE ===\n";
+    cout << getMazeStateString(game) << "\n";
+    cout << "=== POSITIONS ===\n";
+    cout << getPositionsString(game) << "\n";
+    cout << "=== ITEMS COUNT ===\n";
+    cout << getItemsString(game) << "\n";
+    cout << "=== GAME RESULT ===\n";
+    if (game.getResult()) {
+        cout << "Player reached the exit and won the game!\n";
+    } else {
+        cout << "Player did not reach the exit and lost the game.\n";
+	}
 }
 
 std::string ReportGenerator::getMazeStateString(Game& game) {
