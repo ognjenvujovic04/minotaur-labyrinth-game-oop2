@@ -2,6 +2,7 @@
 #include "maze_generator.h"
 #include <iostream>
 
+using namespace std;
 
 Maze::Maze(int pRows, int pColumns, int pItemNumber) {
 	itemNumber = pItemNumber;

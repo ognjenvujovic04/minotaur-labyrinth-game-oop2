@@ -3,8 +3,6 @@
 #include "Item.h"
 #include <vector>
 
-using namespace std;
-
 class Game {
 private:
 	Maze maze;
@@ -12,7 +10,7 @@ private:
 	bool gameOver;
 	bool isWon;
 	bool isMinotaurAlive;
-	vector<Item*> items;
+	std::vector<Item*> items;
 
 	bool isFogActive = false;
 	bool isSwordActive = false;
@@ -32,7 +30,7 @@ public:
 	void refresh();
 	void quit();
 	void displayGameState();
-	string getMazeString();
+	std::string getMazeString();
 
 	Maze& getMaze();
 	int getItemNumber();

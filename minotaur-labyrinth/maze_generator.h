@@ -2,10 +2,8 @@
 #include <set>
 #include <tuple>
 
-using namespace std;
+void generateMaze(char** mazeMatrix, int rows, int columns, int itemNumber, std::tuple<int, int>& robotPosition, std::tuple<int, int>& minotaurPosition);
 
-void generateMaze(char** mazeMatrix, int rows, int columns, int itemNumber, tuple<int, int>& robotPosition, tuple<int, int>& minotaurPosition);
+void generateEmptyMaze(char** maze, int rows, int columns, std::tuple<int, int>& start, std::tuple<int, int>& end);
 
-void generateEmptyMaze(char** maze, int rows, int columns, tuple<int, int>& start, tuple<int, int>& end);
-
-void generateWalls(char** maze, int rows, int columns, set<tuple<int, int>> &visited, tuple<int, int> &start);
+void generateWalls(char** maze, int rows, int columns, std::set<std::tuple<int, int>> &visited, std::tuple<int, int> &start);

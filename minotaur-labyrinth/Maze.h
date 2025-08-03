@@ -3,16 +3,14 @@
 #include <string>
 #include <tuple>
 
-using namespace std;
-
 class Maze {
 private:
 	char** mazeMatrix;
 	int itemNumber;
 	int rows;
 	int columns;
-	tuple<int, int> robotPosition;
-	tuple<int, int> minotaurPosition;
+	std::tuple<int, int> robotPosition;
+	std::tuple<int, int> minotaurPosition;
 
 public:
 	Maze();
@@ -23,18 +21,18 @@ public:
 	int getRows();
 	int getColumns();
 	int getItemNumber();
-	tuple<int, int> getRobotPosition();
-	tuple<int, int> getMinotaurPosition();
+	std::tuple<int, int> getRobotPosition();
+	std::tuple<int, int> getMinotaurPosition();
 
-	void setRobotPosition(tuple<int, int> newPosition);
-	void setMinotaurPosition(tuple<int, int> newPosition);
+	void setRobotPosition(std::tuple<int, int> newPosition);
+	void setMinotaurPosition(std::tuple<int, int> newPosition);
 
 	void moveRobot(int x, int y);
 	void moveMinotaur(int x, int y);
 	void brakeWall(int x, int y);
 
 	void printMaze(bool isFogActive);
-	string toString();
+	std::string toString();
 	bool isWall(int x, int y);
 	bool canMinotaurMoveTo(int x, int y);
 
