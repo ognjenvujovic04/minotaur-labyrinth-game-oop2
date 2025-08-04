@@ -3,103 +3,198 @@
 #include <set>
 #include <stack>
 #include <vector>
+#include <ctime>
+#include <random>
 #include <windows.h>
 #include "maze_generator.h"
 
 using namespace std;
 
-// todo mozda bolji nacin za generisanje zidova
+// Generisanje zidova pomocu Primovog algoritma i provjera postojanja putanje pomocu DFS-a
+void generateMazeWalls(char** mazeMatrix, int rows, int columns, tuple<int, int>& pStart) {
+	// Inicijalizacija generatora ranodom brojeva
+	std::random_device rd;
+	std::mt19937 gen(rd());
 
-// Funkcija za generisanje praznog lavirinta
-void generateEmptyMaze(char** maze, int rows, int columns, tuple<int,int> &start, tuple<int, int> &end) {
-	// Spoljasnji zidovi
+	// Inicijalizacija matrice lavirinta samo sa zidovima
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < columns; j++) {
-			if (i == 0 || i == rows - 1 || j == 0 || j == columns - 1) {
-				maze[i][j] = '#';
+			mazeMatrix[i][j] = '#';
+		}
+	}
+
+	// Postavljanje granica lavirinta
+	std::vector<tuple<int,int>> frontiers;
+	std::vector<std::vector<bool>> visited(rows, std::vector<bool>(columns, false));
+
+	int dx[] = { -2, 2, 0, 0 };
+	int dy[] = { 0, 0, -2, 2 };
+
+	int startRow = 1 + 2 * (gen() % ((rows - 1) / 2));
+	int startCol = 1 + 2 * (gen() % ((columns - 1) / 2));
+
+	// Označavanje početne pozicije
+	mazeMatrix[startRow][startCol] = '.';
+	visited[startRow][startCol] = true;
+
+	// Dodavanje početne pozicije u frontiers
+	for (int i = 0; i < 4; i++) {
+		int newRow = startRow + dx[i];
+		int newCol = startCol + dy[i];
+
+		if (newRow > 0 && newRow < rows - 1 &&
+			newCol > 0 && newCol < columns - 1 &&
+			!visited[newRow][newCol]) {
+			frontiers.push_back(make_tuple(newRow, newCol));
+		}
+	}
+
+	// Glavina petlja Primovog algoritma
+	while (!frontiers.empty()) {
+		// Nesumican odabir iz frontiers
+		std::uniform_int_distribution<> dis(0, frontiers.size() - 1);
+		int randomIndex = dis(gen);
+		tuple<int,int> current = frontiers[randomIndex];
+		frontiers.erase(frontiers.begin() + randomIndex);
+		
+		// Provjera da li je trenutna pozicija već posjećena
+		if (visited[get<0>(current)][get<1>(current)]) {
+			continue;
+		}
+
+		// Određivanje susjeda trenutne pozicije
+		std::vector<tuple<int,int>> neighbors;
+		for (int i = 0; i < 4; i++) {
+			int adjRow = get<0>(current) + dx[i];
+			int adjCol = get<1>(current) + dy[i];
+
+			if (adjRow >= 0 && adjRow < rows &&
+				adjCol >= 0 && adjCol < columns &&
+				visited[adjRow][adjCol]) {
+				neighbors.push_back(make_tuple(adjRow, adjCol));
 			}
-			else {
-				maze[i][j] = '.';
+		}
+
+		if (!neighbors.empty()) {
+			// Nasumično odaberi jednog susjeda
+			std::uniform_int_distribution<> neighborDis(0, neighbors.size() - 1);
+			tuple<int,int> neighbor = neighbors[neighborDis(gen)];
+
+			// Napravi prolaz između trenutne pozicije i susjeda
+			mazeMatrix[get<0>(current)][get<1>(current)] = '.';
+			visited[get<0>(current)][get<1>(current)] = true;
+
+			int wallRow = (get<0>(current) + get<0>(neighbor)) / 2;
+			int wallCol = (get<1>(current) + get<1>(neighbor)) / 2;
+			mazeMatrix[wallRow][wallCol] = '.';
+
+			// Dodaj polja u frontier
+			for (int i = 0; i < 4; i++) {
+				int newRow = get<0>(current) + dx[i];
+				int newCol = get<1>(current) + dy[i];
+
+				if (newRow > 0 && newRow < rows - 1 &&
+					newCol > 0 && newCol < columns - 1 &&
+					!visited[newRow][newCol]) {
+
+					bool alreadyExists = false;
+					for (const auto& frontier : frontiers) {
+						if (get<0>(frontier) == newRow && get<1>(frontier) == newCol) {
+							alreadyExists = true;
+							break;
+						}
+					}
+
+					if (!alreadyExists) {
+						frontiers.push_back(make_tuple(newRow, newCol));
+					}
+				}
 			}
 		}
 	}
-	// Ulaz i robot
-	int entrance = rand() % (columns - 2) + 1;
-	maze[0][entrance] = 'U';
-	maze[1][entrance] = 'R';
-	start = make_tuple(1, entrance);
-	// Izlaz
-	int exit = rand() % (columns - 2) + 1;
-	maze[rows - 1][exit] = 'I';
-	end = make_tuple(rows - 1, exit);
+
+	// Napravi ulaz nesumicno
+	std::uniform_int_distribution<> entranceDis(1, columns - 2);
+	int entranceCol = entranceDis(gen);
+	mazeMatrix[0][entranceCol] = 'U';
+	tuple<int, int> entrancePosition = make_tuple(1, entranceCol);
+	pStart = entrancePosition;
+
+	// Napravi izlaz nesumicno
+	std::uniform_int_distribution<> exitDis(1, columns - 2);
+	int exitCol = exitDis(gen);
+	mazeMatrix[rows - 1][exitCol] = 'I';
+
+	// Osiguraj prolaz
+	mazeMatrix[rows - 2][exitCol] = '.';
+	mazeMatrix[rows - 3][exitCol] = '.';
+	
+
+	// Ako je broj redova paran, predzadnju vrstu random promjeni u prolaze
+	if (rows % 2 == 0 ) {
+		for (int j = 1; j < columns - 1; j++) {
+			int randomValue = rand() % 3; 
+			if (mazeMatrix[rows - 2][j] == '#' && randomValue == 0) {
+				mazeMatrix[rows - 2][j] = '.';
+			}
+		}
+	}
+	if (columns % 2 == 0){
+	// Ako je broj kolona paran predzadnju kolonu ranodm promjeni u prolaze
+		for (int j = 1; j < rows - 1; j++) {
+			int randomValue = rand() % 3;
+			if (mazeMatrix[j][columns - 2] == '#' && randomValue == 0) {
+				mazeMatrix[j][columns - 2] = '.';
+			}
+		}
+	}
+
+	mazeMatrix[1][entranceCol] = 'R';
 }
 
-// Generisanje zidova i provjera postojanja putanje pomocu DFS-a
-void generateWalls(char** maze, int rows, int columns, set<tuple<int, int>> &pVisited, tuple<int, int>& pStart) {
-	// Pocetna lokacija robota i izlaza
-	tuple<int, int> start, end;
-
-	// Generisanje zidova i provjera da li postoji putanja
+bool findPath(char** maze, int rows, int columns, tuple<int, int>& start, set<tuple<int, int>>& pVisited) {
+	bool pathExists = false;
+	set<tuple<int, int>> visited;
+	stack<tuple<int, int>> toVisit;
+	toVisit.push(start);
 	while (true) {
-
-		generateEmptyMaze(maze, rows, columns, start, end);
-		// todo ne samo minimalno
-		//int wallNumber = (rows + columns) * 2;
-		int wallNumber = (rows + columns) * 2 + rand() % ((rows + columns));
-		
-		while (wallNumber != 0) {
-			int wallX = rand() % (rows - 2) + 1;
-			int wallY = rand() % (columns - 2) + 1;
-			if (maze[wallX][wallY] == 'R') {
-				continue;
-			}
-			maze[wallX][wallY] = '#';
-			wallNumber--;
-		}
-
-		// Provjera postojanja putanje
-		bool pathExists = true;
-		set<tuple<int, int>> visited;
-		stack<tuple<int, int>> toVisit;
-		toVisit.push(start);
-		while (true) {
-			if (toVisit.empty()) {
-				pathExists = false;
-				break;
-			}
-			tuple<int, int> current = toVisit.top();
-			toVisit.pop();
-			visited.insert(current);
-			int x = get<0>(current);
-			int y = get<1>(current);
-			if (maze[x][y] == 'I') {
-				pathExists = true;
-				break;
-			}
-			if (x == 0 || y == 0) {
-				continue;
-			}
-			if (maze[x - 1][y] != '#' && visited.find(make_tuple(x - 1, y)) == visited.end()) {
-				toVisit.push(make_tuple(x - 1, y));
-			}
-			if (maze[x + 1][y] != '#' && visited.find(make_tuple(x + 1, y)) == visited.end()) {
-				toVisit.push(make_tuple(x + 1, y));
-			}
-			if (maze[x][y - 1] != '#' && visited.find(make_tuple(x, y - 1)) == visited.end()) {
-				toVisit.push(make_tuple(x, y - 1));
-			}
-			if (maze[x][y + 1] != '#' && visited.find(make_tuple(x, y + 1)) == visited.end()) {
-				toVisit.push(make_tuple(x, y + 1));
-			}
-		}
-		if (pathExists) {
-			pVisited = visited;
-			pStart = start;
+		if (toVisit.empty()) {
+			pathExists = false;
 			break;
 		}
+		tuple<int, int> current = toVisit.top();
+		toVisit.pop();
+		visited.insert(current);
+		int x = get<0>(current);
+		int y = get<1>(current);
+		if (maze[x][y] == 'I') {
+			pathExists = true;
+			break;
+		}
+		if (x == 0 || y == 0) {
+			continue;
+		}
+		if (maze[x - 1][y] != '#' && visited.find(make_tuple(x - 1, y)) == visited.end()) {
+			toVisit.push(make_tuple(x - 1, y));
+		}
+		if (maze[x + 1][y] != '#' && visited.find(make_tuple(x + 1, y)) == visited.end()) {
+			toVisit.push(make_tuple(x + 1, y));
+		}
+		if (maze[x][y - 1] != '#' && visited.find(make_tuple(x, y - 1)) == visited.end()) {
+			toVisit.push(make_tuple(x, y - 1));
+		}
+		if (maze[x][y + 1] != '#' && visited.find(make_tuple(x, y + 1)) == visited.end()) {
+			toVisit.push(make_tuple(x, y + 1));
+		}
+	}
+	if (pathExists) {
+		pVisited = visited;
+		return true;
+	} 
+	else {
+		return false;
 	}
 }
-
 
 void generateMaze(char** maze, int rows, int columns, int itemNumber, tuple<int, int>& robotPosition, tuple<int, int>& minotaurPosition) {
 	// Mjerenje vremena generisanja
@@ -115,13 +210,20 @@ void generateMaze(char** maze, int rows, int columns, int itemNumber, tuple<int,
 	tuple<int, int> start;
 	
 	// Zidovi i moguca polja
-	generateWalls(maze, rows, columns, visited, start);
+	//generateWalls(maze, rows, columns, visited, start);
+	generateMazeWalls(maze, rows, columns, start);
+	if (findPath(maze, rows, columns, start, visited)) {
+		cout << "Putanja do izlaza je pronadjena!" << endl;
+	}
+	else {
+		cout << "Putanja do izlaza nije pronadjena!" << endl;
+	}
 
 	robotPosition = start;
 
 	// Ispis stanja maze-a ali visited polja su zelene boje
 
-	/*for (int i = 0; i < rows; i++) {
+	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < columns; j++) {
 			if (visited.find(make_tuple(i, j)) != visited.end()) {
 				cout << "\033[1;32m" << maze[i][j] << "\033[0m";
@@ -137,8 +239,6 @@ void generateMaze(char** maze, int rows, int columns, int itemNumber, tuple<int,
 	}
 	cout << endl;
 
-	int input;
-	cin >> input;*/
 	
 	// Minotaur
 	// Pravi vektor polja na kojima moze biti minotaur
@@ -171,6 +271,6 @@ void generateMaze(char** maze, int rows, int columns, int itemNumber, tuple<int,
 	clock_t end = clock();
 	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
 	cout << endl << "Vrijeme generisanja: " << elapsed_secs << "s" << endl << endl;
-	Sleep(3000);
+	Sleep(5000);
 }
 
