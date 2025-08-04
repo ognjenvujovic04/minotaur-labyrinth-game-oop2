@@ -1,3 +1,15 @@
+/**
+ * Item.h
+ *
+ * Funkcionalnost:
+ * - Definise apstraktnu osnovnu klasu za sve predmete u igri
+ * - Predmeti imaju tip i trajanje efekta koji se smanjuje svakim potezom
+ * - Klasa sadrzi virtuelnu metodu applyEffect koju implementiraju konkretni tipovi predmeta
+ * - Ova klasa se nasledjuje od strane klasa FogItem, SwordItem, ShieldItem, HammerItem
+ *
+ * Autori: Ognjen [dodaj ostale ako ih ima]
+ * Datum poslednje izmene: avgust 2025
+ */
 #pragma once
 
 enum ItemType { FOG, SWORD, SHIELD, HAMMER };
@@ -10,15 +22,10 @@ protected:
 public:
     Item(ItemType type, int duration);
 
-    // Dohvatanje tipa predmeta
     ItemType getType() const;
-
-    // Dohvatanje trajanja efekta
     int getDuration() const;
 
-	void decreaseDuration();   
-
-    // Efekat predmeta (apstraktna metoda)
+    void decreaseDuration();
     virtual void applyEffect() const = 0;
 };
 

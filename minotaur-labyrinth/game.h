@@ -1,26 +1,36 @@
 #pragma once
 #include "Maze.h"
 #include "Item.h"
+/**
+ * Game.h
+ *
+ * Funkcionalnost:
+ * - Definicija klase Game koja upravlja cijelokupnom igrom
+ * - Sadrži atribute za stanje lavirinta, robota, minotaura i aktivne predmete
+ * - Deklaracije metoda za logiku igre i prikaz stanja
+ *
+ * Autori: Ognjen [dodati po potrebi]
+ * Datum poslednje izmene: todo
+ */
 #include <vector>
 
 class Game {
 private:
-	Maze maze;
-	int itemNumber;
-	bool gameOver;
-	bool isWon;
-	bool isMinotaurAlive;
-	std::vector<Item*> items;
+	Maze maze;                     // Lavirint u kojem se odvija igra
+	int itemNumber;               // Broj preostalih predmeta u lavirintu
+	bool gameOver;                // Oznacava da li je igra zavrsena
+	bool isWon;                   // Oznacava da li je igrac pobedio
+	bool isMinotaurAlive;        // Status zivota minotaura
+	std::vector<Item*> items;    // Lista aktivnih predmeta u igri
 
-	bool isFogActive = false;
-	bool isSwordActive = false;
-	bool isShieldActive = false;
-	bool isHammerActive = false;
+	bool isFogActive = false;    // Da li je aktivan efekat magle
+	bool isSwordActive = false;  // Da li je aktivan efekat maca
+	bool isShieldActive = false; // Da li je aktivan efekat stita
+	bool isHammerActive = false; // Da li je aktivan efekat cekica
 	
-	void handleRobotMovement(char command); // Obrada unosa korisnika za robota
-	void handleMinotaurMovement();         // Generisanje poteza Minotaura
-	void foundRobot(int x, int y, int newX, int newY);			// Funkcija za jedenje robota od strane Minotaura
-	//void handleItemPickup();               // Obrada kupljenja predmeta
+	void handleRobotMovement(char command); 
+	void handleMinotaurMovement();         
+	void foundRobot(int x, int y, int newX, int newY);			
 
 public:
 	Game(int rows, int columns, int itemNumber);

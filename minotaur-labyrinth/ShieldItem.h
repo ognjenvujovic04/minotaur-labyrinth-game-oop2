@@ -1,3 +1,14 @@
+/**
+ * ShieldItem.h
+ *
+ * Funkcionalnost:
+ * - Definise klasu ShieldItem koja nasledjuje apstraktnu klasu Item
+ * - Predstavlja predmet koji pruza zastitu robotu (npr. od minotaura)
+ * - Implementira efekat predmeta kroz metodu applyEffect
+ *
+ * Autori: Ognjen
+ * Datum poslednje izmene: avgust 2025
+ */
 #pragma once
 #include "Item.h"
 

@@ -1,3 +1,13 @@
+/**
+ * ReportGenerator.h
+ *
+ * Omogucava generisanje izvestaja o trenutnom stanju igre.
+ * U izvestaju se nalaze podaci o lavirintu, pozicijama igraca i predmeta.
+ * Izvestaj se cuva u tekstualni fajl ciji se naziv moze proslediti.
+ *
+ * Autor: Ognjen
+ * Datum poslednje izmene: avgust 2025
+ */
 #pragma once
 #include "Game.h"
 #include <string>

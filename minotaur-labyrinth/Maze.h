@@ -1,3 +1,14 @@
+/**
+ * Maze.h
+ *
+ * Funkcionalnost:
+ * - Definicija klase Maze koja predstavlja lavirint igre
+ * - Sadrzi informacije o rasporedu elemenata u lavirintu, poziciji robota i minotaura
+ * - Omogucava pomeranje entiteta, ispis lavirinta, detekciju zidova i druge osnovne operacije
+ *
+ * Autori: Ognjen [dodaj druge autore ako ih ima]
+ * Datum poslednje izmene: avgust 2025
+ */
 #pragma once
 #include <set>
 #include <string>
@@ -5,12 +16,11 @@
 
 class Maze {
 private:
-	char** mazeMatrix;
-	int itemNumber;
-	int rows;
-	int columns;
-	std::tuple<int, int> robotPosition;
-	std::tuple<int, int> minotaurPosition;
+	char** mazeMatrix;                      // Matrica lavirinta (2D niz karaktera)
+	int rows;                               // Broj redova lavirinta
+	int columns;                            // Broj kolona lavirinta
+	std::tuple<int, int> robotPosition;     // Pozicija robota u lavirintu (x, y)
+	std::tuple<int, int> minotaurPosition;  // Pozicija minotaura u lavirintu (x, y)
 
 public:
 	Maze();

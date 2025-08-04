@@ -1,3 +1,14 @@
+/**
+ * FogItem.h
+ *
+ * Funkcionalnost:
+ * - Definise klasu FogItem koja nasledjuje apstraktnu klasu Item
+ * - Predstavlja predmet koji aktivira efekat magle (sakriva delove lavirinta)
+ * - Implementira efekat predmeta kroz metodu applyEffect
+ *
+ * Autori: Ognjen
+ * Datum poslednje izmene: avgust 2025
+ */
 #pragma once
 #include "Item.h"
 
