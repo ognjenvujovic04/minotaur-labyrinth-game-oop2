@@ -1,15 +1,11 @@
 #include <iostream>
 #include <conio.h>
 #include <windows.h>
-#include <vector>
 #include "Game.h"
-#include "Item.h"
 #include "FogItem.h"
 #include "SwordItem.h"
 #include "ShieldItem.h"
 #include "HammerItem.h"
-#include "Maze.h"
-#include "maze_generator.h"
 #include "ReportGenerator.h"
 
 using namespace std;
@@ -36,19 +32,19 @@ void Game::refresh() {
 	isHammerActive = false;
 
 	for (Item* item : items) {
+		item->decreaseDuration();
 		if (item->getDuration() == -1) {
 			items.erase(remove(items.begin(), items.end(), item), items.end());
 			delete item;
+			continue;
 		}
-		else {
-			item->decreaseDuration();
-			switch (item->getType()) {
-				case FOG:    isFogActive = true; break;
-				case SWORD:  isSwordActive = true; break;
-				case SHIELD: isShieldActive = true; break;
-				case HAMMER: isHammerActive = true; break;
-			}
+		switch (item->getType()) {
+			case FOG:    isFogActive = true; break;
+			case SWORD:  isSwordActive = true; break;
+			case SHIELD: isShieldActive = true; break;
+			case HAMMER: isHammerActive = true; break;
 		}
+		
 	}
 	displayGameState();
 }
@@ -97,18 +93,11 @@ void Game::start() {
 				cout << "\033\r[K";  // Obrisi tu liniju
 				cout << "Nepoznata komanda, probajte ponovo!" << endl;
 				cout << "Unesite komandu:";
-				//Sleep(700);
 				error = true;
 			}
 		}
 	}
 	ReportGenerator::generateReport(*this);
-}
-		
-
-void Game::quit() {
-	gameOver = true;
-	//Todo zapis stanja
 }
 
 void Game::displayGameState() {

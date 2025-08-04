@@ -28,7 +28,6 @@ public:
 
 	void start();
 	void refresh();
-	void quit();
 	void displayGameState();
 	std::string getMazeString() const;
 
