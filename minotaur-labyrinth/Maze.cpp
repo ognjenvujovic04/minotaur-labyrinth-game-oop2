@@ -1,5 +1,5 @@
 #include "Maze.h"
-#include "maze_generator.h"
+#include "MazeGenerator.h"
 #include <iostream>
 
 using namespace std;

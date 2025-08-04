@@ -1,7 +1,6 @@
 #include <iostream>
 #include <windows.h>
 #include <regex>
-#include "maze_generator.h"
 #include "Game.h"
 
 using namespace std;

@@ -134,7 +134,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Maze.cpp" />
-    <ClCompile Include="maze_generator.cpp" />
+    <ClCompile Include="MazeGenerator.cpp" />
     <ClCompile Include="ShieldItem.cpp" />
     <ClCompile Include="ReportGenerator.cpp" />
     <ClCompile Include="SwordItem.cpp" />
@@ -146,7 +146,7 @@
     <ClInclude Include="ReportGenerator.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Maze.h" />
-    <ClInclude Include="maze_generator.h" />
+    <ClInclude Include="MazeGenerator.h" />
     <ClInclude Include="ShieldItem.h" />
     <ClInclude Include="SwordItem.h" />
   </ItemGroup>

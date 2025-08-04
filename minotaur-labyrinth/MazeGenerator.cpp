@@ -6,7 +6,7 @@
 #include <ctime>
 #include <random>
 #include <windows.h>
-#include "maze_generator.h"
+#include "MazeGenerator.h"
 
 using namespace std;
 
