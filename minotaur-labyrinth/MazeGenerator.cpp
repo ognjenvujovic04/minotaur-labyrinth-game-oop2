@@ -1,17 +1,42 @@
-﻿#include <iostream>
+﻿/**
+ * MazeGenerator.cpp
+ *
+ * Funkcionalnost:
+ * - Implementacija algoritma za generisanje lavirinta koristeci Primov algoritam.
+ * - Provera postojanja putanje od pocetka do izlaza pomocu DFS pretrage.
+ * - Generisanje polja za robota, minotaura i predmeta unutar lavirinta.
+ *
+ * Autori: [Tvoje ime]
+ * Datum poslednje izmene: 2025-08-04
+ */
+#include <iostream>
 #include <ctime>
 #include <set>
 #include <stack>
 #include <vector>
-#include <ctime>
 #include <random>
 #include <windows.h>
 #include "MazeGenerator.h"
 
 using namespace std;
 
-// Generisanje zidova pomocu Primovog algoritma i provjera postojanja putanje pomocu DFS-a
-void generateMazeWalls(char** mazeMatrix, int rows, int columns, tuple<int, int>& pStart) {
+/**
+ * generateMazeWalls
+ *
+ * Funkcionalnost:
+ * - Generise zidove lavirinta i prolaze koristeci Primov algoritam.
+ * - Postavlja ulaz i izlaz lavirinta.
+ *
+ * Ulazni argumenti:
+ * - char** mazeMatrix: 2D matrica lavirinta koja se popunjava.
+ * - int rows: broj redova lavirinta.
+ * - int columns: broj kolona lavirinta.
+ * - tuple<int, int>& pStart: referenca za poziciju pocetnog ulaza (robot start).
+ *
+ * Povratna vrednost:
+ * - Nema povratnu vrednost (void).
+ */
+void MazeGenerator::generateMazeWalls(char** mazeMatrix, int rows, int columns, tuple<int, int>& pStart) {
 	// Inicijalizacija generatora ranodom brojeva
 	std::random_device rd;
 	std::mt19937 gen(rd());
@@ -33,11 +58,11 @@ void generateMazeWalls(char** mazeMatrix, int rows, int columns, tuple<int, int>
 	int startRow = 1 + 2 * (gen() % ((rows - 1) / 2));
 	int startCol = 1 + 2 * (gen() % ((columns - 1) / 2));
 
-	// Označavanje početne pozicije
+	// Oznacavanje pocetne pozicije
 	mazeMatrix[startRow][startCol] = '.';
 	visited[startRow][startCol] = true;
 
-	// Dodavanje početne pozicije u frontiers
+	// Dodavanje pocetne pozicije u frontiers
 	for (int i = 0; i < 4; i++) {
 		int newRow = startRow + dx[i];
 		int newCol = startCol + dy[i];
@@ -57,12 +82,12 @@ void generateMazeWalls(char** mazeMatrix, int rows, int columns, tuple<int, int>
 		tuple<int,int> current = frontiers[randomIndex];
 		frontiers.erase(frontiers.begin() + randomIndex);
 		
-		// Provjera da li je trenutna pozicija već posjećena
+		// Provjera da li je trenutna pozicija vec posjecena
 		if (visited[get<0>(current)][get<1>(current)]) {
 			continue;
 		}
 
-		// Određivanje susjeda trenutne pozicije
+		// Odredjivanje susjeda trenutne pozicije
 		std::vector<tuple<int,int>> neighbors;
 		for (int i = 0; i < 4; i++) {
 			int adjRow = get<0>(current) + dx[i];
@@ -76,11 +101,11 @@ void generateMazeWalls(char** mazeMatrix, int rows, int columns, tuple<int, int>
 		}
 
 		if (!neighbors.empty()) {
-			// Nasumično odaberi jednog susjeda
+			// Nasumicno odaberi jednog susjeda
 			std::uniform_int_distribution<> neighborDis(0, neighbors.size() - 1);
 			tuple<int,int> neighbor = neighbors[neighborDis(gen)];
 
-			// Napravi prolaz između trenutne pozicije i susjeda
+			// Napravi prolaz izmedju trenutne pozicije i susjeda
 			mazeMatrix[get<0>(current)][get<1>(current)] = '.';
 			visited[get<0>(current)][get<1>(current)] = true;
 
@@ -152,7 +177,24 @@ void generateMazeWalls(char** mazeMatrix, int rows, int columns, tuple<int, int>
 	mazeMatrix[1][entranceCol] = 'R';
 }
 
-bool findPath(char** maze, int rows, int columns, tuple<int, int>& start, set<tuple<int, int>>& pVisited) {
+/**
+ * findPath
+ *
+ * Funkcionalnost:
+ * - Pronadje da li postoji putanja od startne pozicije do izlaza 'I' u lavirintu koristeci DFS (preko steka).
+ * - Popunjava skup posecenih cvorova tokom pretrage.
+ *
+ * Ulazni argumenti:
+ * - char** maze: 2D matrica lavirinta.
+ * - int rows: broj redova lavirinta.
+ * - int columns: broj kolona lavirinta.
+ * - tuple<int, int>& start: pozicija od koje pocinje pretraga.
+ * - set<tuple<int, int>>& pVisited: referenca za skup posecenih cvorova.
+ *
+ * Povratna vrednost:
+ * - bool: true ako postoji putanja do izlaza, false inace.
+ */
+bool MazeGenerator::findPath(char** maze, int rows, int columns, tuple<int, int>& start, set<tuple<int, int>>& pVisited) {
 	bool pathExists = false;
 	set<tuple<int, int>> visited;
 	stack<tuple<int, int>> toVisit;
@@ -196,7 +238,28 @@ bool findPath(char** maze, int rows, int columns, tuple<int, int>& start, set<tu
 	}
 }
 
-void generateMaze(char** maze, int rows, int columns, int itemNumber, tuple<int, int>& robotPosition, tuple<int, int>& minotaurPosition) {
+/**
+ * generateMaze
+ *
+ * Funkcionalnost:
+ * - Kreira lavirint pozivajuci generateMazeWalls i proverava putanju findPath.
+ * - Postavlja poziciju robota na pocetak lavirinta.
+ * - Nasumicno postavlja poziciju minotaura na dovoljnoj udaljenosti od robota.
+ * - Nasumicno rasporedjuje predmete unutar lavirinta.
+ * - Ispisuje lavirint i vreme generisanja.
+ *
+ * Ulazni argumenti:
+ * - char** maze: 2D matrica lavirinta koja ce biti generisana.
+ * - int rows: broj redova lavirinta.
+ * - int columns: broj kolona lavirinta.
+ * - int itemNumber: broj predmeta za postavljanje.
+ * - tuple<int, int>& robotPosition: referenca za poziciju robota koja se postavlja.
+ * - tuple<int, int>& minotaurPosition: referenca za poziciju minotaura koja se postavlja.
+ *
+ * Povratna vrednost:
+ * - Nema povratnu vrednost (void).
+ */
+void MazeGenerator::generateMaze(char** maze, int rows, int columns, int itemNumber, tuple<int, int>& robotPosition, tuple<int, int>& minotaurPosition) {
 	// Mjerenje vremena generisanja
 	clock_t begin = clock();
 

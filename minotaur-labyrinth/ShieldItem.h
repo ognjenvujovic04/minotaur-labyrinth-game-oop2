@@ -7,7 +7,7 @@
  * - Implementira efekat predmeta kroz metodu applyEffect
  *
  * Autori: Ognjen
- * Datum poslednje izmene: avgust 2025
+ * Datum poslednje izmene: Feb 22, 2025
  */
 #pragma once
 #include "Item.h"

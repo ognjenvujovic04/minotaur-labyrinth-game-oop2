@@ -1,3 +1,20 @@
+/**
+ * Glavni modul za projekat minotaur-labyrinth
+ *
+ * Funkcionalnost:
+ * - Omogucava unos parametara lavirinta (broj kolona, redova i predmeta)
+ * - Validira unose kako iz komandne linije tako i interaktivne unose
+ * - Pokrece glavnu igru sa zadatim parametrima
+ *
+ * Autori:
+ * - [Ime i prezime autora 1]
+ * - [Ime i prezime autora 2] (ako postoji)
+ *
+ * Poslednja izmena:
+ * Datum: [DD.MM.YYYY]
+ * Autor: [Ime autora koji je izvrsio poslednju izmenu]
+ */
+
 #include <iostream>
 #include <windows.h>
 #include <regex>
@@ -5,19 +22,46 @@
 
 using namespace std;
 
-// Funkcija za brisanje greske unosa
+/**
+ * Brise greske unosa iz ulaznog toka
+ *
+ * Funkcionalnost:
+ * - Resetuje stanje ulaznog toka
+ * - Ignorise preostale karaktere u ulaznom toku do kraja linije
+ */
 void clearInputError() {
     cin.clear();
     cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
 }
 
-// Proverava da li je string sastavljen samo od cifara
+/**
+ * Provjerava da li string sadrzi samo cifre
+ *
+ * @param str String koji se proverava
+ * @return bool - true ako su svi karakteri cifre, false inace
+ */
 bool isDigitsOnly(const std::string& str) {
     static const regex digits_only("^[0-9]+$");
     return regex_match(str, digits_only);
 }
 
-// Funkcija dobrodoslice koja uzima broj kolona, redova i predmeta od korisnika
+/**
+ * Funkcija dobrodoslice koja prikazuje pocetni meni i omogucava unos parametara igre
+ *
+ * @param columns Referenca na broj kolona lavirinta
+ * @param rows Referenca na broj redova lavirinta
+ * @param item_number Referenca na broj predmeta u lavirintu
+ *
+ * Funkcionalnost:
+ * - Interaktivno prikuplja podatke od korisnika
+ * - Validira unose i obezbedjuje ponovni unos u slucaju greske
+ * - Brise ekran nakon uspesnog unosa
+ *
+ * Uslovi:
+ * - Minimalne dimenzije lavirinta su 15x15
+ * - Broj predmeta mora biti veci od 3
+ * - Broj predmeta ne sme premasiti broj slobodnih polja
+ */
 void welcome(int& columns, int& rows, int& item_number) {
     cout << "Dobrodosli u igricu bjeg iz lavirinta u Knososu!" << endl << endl;
 
@@ -39,7 +83,6 @@ void welcome(int& columns, int& rows, int& item_number) {
             continue;
         }
         break;
-		
     }
 
     while (true) {
@@ -49,11 +92,9 @@ void welcome(int& columns, int& rows, int& item_number) {
             clearInputError();
             continue;
         }
-		// Broj polja u lavirintu je (columns - 1) * (rows - 1), oduzimam 2 za robota i minotaura, 
-		// i oduzimam (columns + rows) * 2 jer je to minimalan broj blokoava
         if (item_number > ((columns - 1) * (rows - 1) - 2) - ((columns + rows) * 2)) {
             cout << "Broj predmeta ne moze biti veci od broja slobodnih polja lavirinta!" << endl;
-			cout << "Broj slobodnih polja:" << ((columns - 1) * (rows - 1) - 2) - ((columns + rows) * 2);
+            cout << "Broj slobodnih polja:" << ((columns - 1) * (rows - 1) - 2) - ((columns + rows) * 2);
             continue;
         }
         else if (item_number < 4) {
@@ -61,14 +102,24 @@ void welcome(int& columns, int& rows, int& item_number) {
             continue;
         }
         break;
-		
     }
 
-	//Brisanje teksta iz terminala
     system("CLS");
 }
 
-// Proverava da li su uneti argumenti validni brojevi i da li su u opsegu
+/**
+ * Validira unijete parametre za igru
+ *
+ * @param columns Broj kolona lavirinta
+ * @param rows Broj redova lavirinta
+ * @param item_number Broj predmeta u lavirintu
+ * @return bool - true ako su parametri validni, false inace
+ *
+ * Uslovi:
+ * - Minimalne dimenzije lavirinta su 15x15
+ * - Broj predmeta mora biti veci od 3
+ * - Broj predmeta ne sme premasiti broj slobodnih polja
+ */
 bool validateInputs(int columns, int rows, int item_number) {
     if (columns < 15 || rows < 15) {
         cerr << "Dimenzije lavirinta moraju biti barem 15x15!" << endl;
@@ -86,16 +137,30 @@ bool validateInputs(int columns, int rows, int item_number) {
     return true;
 }
 
+/**
+ * Glavna funkcija programa
+ *
+ * @param argc Broj argumenata komandne linije
+ * @param argv Niz argumenata komandne linije
+ * @return int - Statusni kod izlaska (0 za uspeh, 1 za gresku)
+ *
+ * Funkcionalnost:
+ * - Obradjuje argumente komandne linije (ako postoje)
+ * - U suprotnom, pokrece interaktivni meni
+ * - Validira unose i pokrece igru sa zadatim parametrima
+ *
+ * Tipovi izuzetaka:
+ * - invalid_argument - ako argumenti nisu celi brojevi
+ * - out_of_range - ako su brojevi van dozvoljenog opsega
+ */
 int main(int argc, char* argv[]) {
-	// TODO const funckije
     int columns, rows, item_number;
 
     if (argc == 4) {
-		// Proveravam da li su uneti argumenti validni brojevi
         if (!isDigitsOnly(argv[1]) || !isDigitsOnly(argv[2]) || !isDigitsOnly(argv[3])) {
             cerr << "Svi argumenti moraju biti cijeli brojevi. Izlazak iz programa..." << endl;
             return 1;
-		}
+        }
 
         try {
             columns = std::stoi(argv[1]);

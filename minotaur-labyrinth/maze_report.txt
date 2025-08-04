@@ -1,29 +1,29 @@
 === KONACNI IZVESTAJ IGRICE===
 
 === STANJE LAVIRINTA ===
-###U############
-#.#......M..#..#
-#.###.#...###..#
-#P#.#.#.#.#.#.##
-#P#.###.#.#.#.##
-#...#.#.#...P..#
-###P#P#.#.###.##
-#.#P#..P..#...##
-#.#.#.##########
-#...........#.##
-#P#.#.#####.#..#
-#.#.#.....#.P..#
-###.#.#.###.#.##
-#...#P#...#.#..#
-#..#.#..#.####.#
+########U#######
+#.P.#.#.R.#...##
+###.#.#.#.#P##P#
+#P..#...#P....##
+#.###.#.#.####.#
+#.#.#.#.#.#...##
+#.#.#.###.#.####
+#.PP..#..P..#.##
+###.###P#####.##
+#.PP..MP#.#...##
+#.#.#P#.#.#.#.##
+#.#.#.#.....#P##
+#.###.#####.#.##
+#...#..P#...#.##
+#P..###.#.##.###
 #######I########
 
 === POZICIJE ===
-Robot je ubijen.
-Pozicija minotaura: (1, 9)
+Pozicija robota: (1, 8)
+Pozicija minotaura: (9, 6)
 
 === BROJ PREDMETA ===
-Ukupan broj predmeta u labirintu: 10
+Ukupan broj predmeta u labirintu: 16
 
 === REZULTAT IGRE ===
 Igrac nije stigao do izlaza i izgubio je igru.

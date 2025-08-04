@@ -1,3 +1,15 @@
+/**
+ * ReportGenerator.cpp
+ *
+ * Implementacija klase ReportGenerator koja omogucava generisanje
+ * zavrsnog izvestaja o trenutnom stanju igre lavirint.
+ * Izveštaj ukljucuje prikaz stanja lavirinta, pozicija ucesnika,
+ * broj predmeta i rezultat igre.
+ * Izvestaj se upisuje u tekstualni fajl, a takodje se prikazuje i na konzoli.
+ *
+ * Autor: Ognjen
+ * Datum poslednje izmene: avgust 2025
+ */
 #include "ReportGenerator.h"
 #include <iomanip>
 #include <iostream>
@@ -5,6 +17,12 @@
 
 using namespace std;
 
+/**
+ * Generise zavrsni izvjestaj igre u tekstualnom fajlu i prikazuje ga na konzoli.
+ *
+ * @param game Referenca na objekat igre od kojeg se preuzimaju podaci.
+ * @param filename Ime fajla u koji se upisuje izvjestaj.
+ */
 void ReportGenerator::generateReport(Game& game, const std::string& filename) {
     std::ofstream reportFile(filename);
 
@@ -52,10 +70,23 @@ void ReportGenerator::generateReport(Game& game, const std::string& filename) {
     }
 }
 
+/**
+ * Dohvata string koji opisuje trenutno stanje lavirinta iz igre.
+ *
+ * @param game Referenca na objekat igre.
+ * @return String sa opisom lavirinta.
+ */
 std::string ReportGenerator::getMazeStateString(Game& game) {
     return game.getMazeString();
 }
 
+/**
+ * Dohvata string sa informacijama o pozicijama robota i minotaura.
+ * Ukoliko je neki od njih ubijen, to se jasno navodi.
+ *
+ * @param game Referenca na objekat igre.
+ * @return String sa informacijama o pozicijama ucesnika.
+ */
 std::string ReportGenerator::getPositionsString(Game& game) {
     tuple<int, int> robotPos = game.getRobotPosition();
     tuple<int, int> minotaurPos = game.getMinotaurPosition();
@@ -76,6 +107,12 @@ std::string ReportGenerator::getPositionsString(Game& game) {
     return result;
 }
 
+/**
+ * Dohvata string sa informacijom o ukupnom broju predmeta u lavirintu.
+ *
+ * @param game Referenca na objekat igre.
+ * @return String sa brojem predmeta.
+ */
 std::string ReportGenerator::getItemsString(Game& game) {
     int itemCount = game.getItemNumber();
 

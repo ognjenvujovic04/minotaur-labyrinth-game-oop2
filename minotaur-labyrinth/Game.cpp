@@ -1,3 +1,14 @@
+/**
+ * Game.cpp
+ *
+ * Funkcionalnost:
+ * - Implementacija glavne logike igre: upravljanje robotom, minotaurom i predmetima
+ * - Sadrzi funkcionalnosti za kretanje, prikaz lavirinta i obradu kraja igre
+ *
+ * Autori: Ognjen [i ostali ako ima]
+ * Datum poslednje izmene: todo
+ */
+
 #include <iostream>
 #include <conio.h>
 #include <windows.h>
@@ -10,7 +21,20 @@
 
 using namespace std;
 
+
+/**
+ * Konstruktor klase Game
+ *
+ * Funkcionalnost:
+ * - Inicijalizuje lavirint sa prosledjenim brojem redova, kolona i brojem predmeta
+ * - Postavlja osnovne parametre igre
+ *
+ * @param pRows broj redova lavirinta
+ * @param pColumns broj kolona lavirinta
+ * @param pItemNumber ukupni broj predmeta koji se nasumicno rasporedjuju po lavirintu
+ */
 Game::Game(int pRows, int pColumns, int pItemNumber)
+
 	: itemNumber(pItemNumber),
 	maze(pColumns, pRows, pItemNumber),
 	gameOver(false),
@@ -18,12 +42,28 @@ Game::Game(int pRows, int pColumns, int pItemNumber)
 	items(), 
 	isMinotaurAlive(true){ }
 	
-
-Game::~Game() {
-	//todo
+/**
+ * Destruktor klase Game
+ *
+ * Funkcionalnost:
+ * - Oslobadja dinamicki alociranu memoriju za sve aktivne predmete
+ */
+Game::~Game(){
+	for (Item* item : items) {
+		delete item;
+	}
 }
 
-void Game::refresh() {
+/**
+ * Osvjezava stanje igre
+ *
+ * Funkcionalnost:
+ * - Resetuje sve efekte (magla, mac, stit, cekic)
+ * - Smanjuje trajanje aktivnih predmeta
+ * - Brise predmete kojima je istekao efekat
+ * - Prikazuje trenutno stanje igre
+ */
+void Game::refresh(){
 	system("CLS");
 
 	isFogActive = false;
@@ -49,6 +89,15 @@ void Game::refresh() {
 	displayGameState();
 }
 
+/**
+ * Pokrece glavnu petlju igre
+ *
+ * Funkcionalnost:
+ * - Prikazuje stanje igre
+ * - Prima i obradjuje korisnicki unos (WASD za kretanje, Q za izlaz)
+ * - Upravlja kretanjem robota i minotaura
+ * - Po zavrsetku igre generise izvestaj
+ */
 void Game::start() {
 	char command;
 	while (!gameOver) {
@@ -67,7 +116,6 @@ void Game::start() {
 			else if (command == 'w' || command == 'a' || command == 's' || command == 'd') {
 				try {
 					handleRobotMovement(command);
-					// todo popravljanje refreshe rate
 					if (isMinotaurAlive) {
 						handleMinotaurMovement();
 					}
@@ -100,7 +148,15 @@ void Game::start() {
 	ReportGenerator::generateReport(*this);
 }
 
-void Game::displayGameState() {
+/**
+ * Prikazuje trenutno stanje lavirinta i aktivnih predmeta
+ *
+ * Funkcionalnost:
+ * - Ispisuje lavirint sa ili bez efekta magle
+ * - Ispisuje sve aktivne predmete i njihovo preostalo trajanje
+ */
+void Game::displayGameState()
+{
 	cout << "Stanje igre:" << endl;
 		
 	// Ispis mape
@@ -132,12 +188,31 @@ void Game::displayGameState() {
 
 }
 
-string Game::getMazeString() const{
+/**
+ * Vraca lavirint kao string
+ *
+ * @return string reprezentacija lavirinta
+ */
+string Game::getMazeString() const
+{
 	return maze.toString();
 }
 
-// Funkcija za obradu kretanja robota
-void Game::handleRobotMovement(char command) {
+/**
+ * Obradjuje kretanje robota u lavirintu
+ *
+ * Funkcionalnost:
+ * - Pomera robota u smeru zadatom komandnom ('w', 'a', 's', 'd')
+ * - Proverava prepreke (zid, ulaz, izlaz, minotaur)
+ * - Upravlja razbijanjem zidova i skupljanjem predmeta
+ * - Azurira stanje igre u slucaju izlaza, pobede ili poraza
+ *
+ * @param command karakter koji oznacava smer kretanja
+ *
+ * @throws const char* u slucaju neispravnog poteza (npr. zid na putu)
+ */
+void Game::handleRobotMovement(char command)
+{
 	// Trenutna pozicija robota
 	int x, y;
 	x = get<0>(maze.getRobotPosition());
@@ -236,16 +311,36 @@ void Game::handleRobotMovement(char command) {
 	}
 }
 
-// Funkcija za jedenje robota od strane Minotaura
-void Game::foundRobot(int x, int y, int newX, int newY) {
+/**
+ * Azurira stanje igre kada minotaur pojede robota
+ *
+ * Funkcionalnost:
+ * - Unistava robota
+ * - Pomera minotaura na novu poziciju
+ * - Postavlja kraj igre
+ *
+ * @param x trenutni red minotaura
+ * @param y trenutna kolona minotaura
+ * @param newX nova pozicija reda
+ * @param newY nova pozicija kolone
+ */
+void Game::foundRobot(int x, int y, int newX, int newY){
 	maze.killRobot();
 	maze.moveMinotaur(newX, newY);
 	cout << endl << endl << "Izgubili ste, pojeo vas je minotaur!" << endl;
 	gameOver = true;
 }
 
-// Funkcija za generisanje poteza Minotaura
-void Game::handleMinotaurMovement() {
+/**
+ * Obradjuje kretanje minotaura
+ *
+ * Funkcionalnost:
+ * - Detektuje da li je robot u susednim poljima
+ * - Napada robota ako nema aktivan stit
+ * - Nasumicno bira sledece validno polje za kretanje
+ * - Smanjuje broj predmeta ako minotaur prodje preko njih
+ */
+void Game::handleMinotaurMovement(){
 	int x, y;
 	x = get<0>(maze.getMinotaurPosition());
 	y = get<1>(maze.getMinotaurPosition());
@@ -307,11 +402,10 @@ void Game::handleMinotaurMovement() {
 	}
 		
 	if (!possibleMoves.empty()) {
-		// todo sta ako satjeram minotaura u cosak
-		// mozda da gurne robota
 		int random = rand() % possibleMoves.size();
 		newX = get<0>(possibleMoves[random]);
 		newY = get<1>(possibleMoves[random]);
+
 		// Unistavanje predmeta ako je minotaur na njemu
 		if (maze.moveMinotaur(newX, newY)) {
 			itemNumber--;
@@ -319,18 +413,39 @@ void Game::handleMinotaurMovement() {
 	}
 }
 
-int Game::getItemNumber() {
+/**
+ * Vraca broj preostalih predmeta u lavirintu
+ *
+ * @return broj preostalih predmeta
+ */
+int Game::getItemNumber(){
 	return itemNumber;
 }
 
-bool Game::getResult() {
+/**
+ * Vraca da li je igra pobijedjena
+ *
+ * @return true ako je robot stigao do izlaza, u suprotnom false
+ */
+bool Game::getResult()
+{
 	return isWon;
 }
 
-tuple<int, int> Game::getRobotPosition() const {
+/**
+ * Vraca trenutnu poziciju robota
+ *
+ * @return par (x, y) koji oznacava poziciju robota
+ */
+tuple<int, int> Game::getRobotPosition() const{
 	return maze.getRobotPosition();
 }
 
-tuple<int, int> Game::getMinotaurPosition() const {
+/**
+ * Vraca trenutnu poziciju minotaura
+ *
+ * @return par (x, y) koji oznacava poziciju minotaura
+ */
+tuple<int, int> Game::getMinotaurPosition() const{
 	return maze.getMinotaurPosition();
 }
