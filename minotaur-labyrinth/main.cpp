@@ -58,7 +58,7 @@ bool isDigitsOnly(const std::string& str) {
  * - Brise ekran nakon uspesnog unosa
  *
  * Uslovi:
- * - Minimalne dimenzije lavirinta su 15x15
+ * - Minimalne dimenzije lavirinta su 16x16
  * - Broj predmeta mora biti veci od 3
  * - Broj predmeta ne sme premasiti broj slobodnih polja
  */
@@ -78,8 +78,8 @@ void welcome(int& columns, int& rows, int& item_number) {
             clearInputError();
             continue;
         }
-        if (rows < 15 || columns < 15) {
-            cout << "Dimenzije lavirinta moraju biti barem 15x15!" << endl;
+        if (rows < 16 || columns < 16) {
+            cout << "Dimenzije lavirinta moraju biti barem 16x16!" << endl;
             continue;
         }
         break;
@@ -116,13 +116,13 @@ void welcome(int& columns, int& rows, int& item_number) {
  * @return bool - true ako su parametri validni, false inace
  *
  * Uslovi:
- * - Minimalne dimenzije lavirinta su 15x15
+ * - Minimalne dimenzije lavirinta su 16x16
  * - Broj predmeta mora biti veci od 3
  * - Broj predmeta ne sme premasiti broj slobodnih polja
  */
 bool validateInputs(int columns, int rows, int item_number) {
-    if (columns < 15 || rows < 15) {
-        cerr << "Dimenzije lavirinta moraju biti barem 15x15!" << endl;
+    if (columns < 16 || rows < 16) {
+        cerr << "Dimenzije lavirinta moraju biti barem 16x16!" << endl;
         return false;
     }
     int max_items = ((columns - 1) * (rows - 1) - 2) - ((columns + rows) * 2);
