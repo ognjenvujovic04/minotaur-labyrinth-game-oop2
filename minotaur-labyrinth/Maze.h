@@ -6,8 +6,8 @@
  * - Sadrzi informacije o rasporedu elemenata u lavirintu, poziciji robota i minotaura
  * - Omogucava pomeranje entiteta, ispis lavirinta, detekciju zidova i druge osnovne operacije
  *
- * Autori: Ognjen [dodaj druge autore ako ih ima]
- * Datum poslednje izmene: avgust 2025
+ * Autori: Ognjen
+ * Datum poslednje izjmene: 14.9.2025.
  */
 #pragma once
 #include <set>

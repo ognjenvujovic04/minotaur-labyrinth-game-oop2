@@ -5,8 +5,8 @@
  * - Implementacija lavirinta u kome se odvija igra
  * - Sadrzi metode za kretanje robota i minotaura, prikaz lavirinta i manipulaciju poljima
  *
- * Autori: Ognjen [dodati po potrebi]
- * Datum poslednje izmene: todo
+ * Autori: Ognjen 
+ * Datum poslednje izmjene: 14.9.2025.
  */
 #include "Maze.h"
 #include "MazeGenerator.h"

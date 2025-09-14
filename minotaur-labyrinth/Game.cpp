@@ -5,8 +5,8 @@
  * - Implementacija glavne logike igre: upravljanje robotom, minotaurom i predmetima
  * - Sadrzi funkcionalnosti za kretanje, prikaz lavirinta i obradu kraja igre
  *
- * Autori: Ognjen [i ostali ako ima]
- * Datum poslednje izmene: todo
+ * Autori: Ognjen 
+ * Datum poslednje izmjene: 14.9.2025.
  */
 
 #include <iostream>
@@ -96,7 +96,7 @@ void Game::refresh(){
  * - Prikazuje stanje igre
  * - Prima i obradjuje korisnicki unos (WASD za kretanje, Q za izlaz)
  * - Upravlja kretanjem robota i minotaura
- * - Po zavrsetku igre generise izvestaj
+ * - Po zavrsetku igre generise izvjestaj
  */
 void Game::start() {
 	char command;

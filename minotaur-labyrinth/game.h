@@ -9,8 +9,8 @@
  * - Sadrži atribute za stanje lavirinta, robota, minotaura i aktivne predmete
  * - Deklaracije metoda za logiku igre i prikaz stanja
  *
- * Autori: Ognjen [dodati po potrebi]
- * Datum poslednje izmene: todo
+ * Autori: Ognjen
+ * Datum poslednje izmjene: 14.9.2025.
  */
 #include <vector>
 

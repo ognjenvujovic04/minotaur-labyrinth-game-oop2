@@ -6,8 +6,8 @@
  * - Provera postojanja putanje od pocetka do izlaza pomocu DFS pretrage.
  * - Generisanje polja za robota, minotaura i predmeta unutar lavirinta.
  *
- * Autori: [Tvoje ime]
- * Datum poslednje izmene: 2025-08-04
+ * Autori: Ognjen
+ * Datum poslednje izjmene: 14.9.2025.
  */
 #include <iostream>
 #include <ctime>
@@ -248,18 +248,12 @@ bool MazeGenerator::findPath(char** maze, tuple<int, int>& start, set<tuple<int,
  * - Ispisuje lavirint i vreme generisanja.
  *
  * Ulazni argumenti:
- * TODO
- * - char** maze: 2D matrica lavirinta koja ce biti generisana.
- * - int rows: broj redova lavirinta.
- * - int columns: broj kolona lavirinta.
+ * - Maze& mazeClass: referenca na objekat klase Maze koji se popunjava.
  * - int itemNumber: broj predmeta za postavljanje.
- * - tuple<int, int>& robotPosition: referenca za poziciju robota koja se postavlja.
- * - tuple<int, int>& minotaurPosition: referenca za poziciju minotaura koja se postavlja.
  *
  * Povratna vrednost:
  * - Nema povratnu vrednost (void).
  */
-//TODO popravit da se preko maze prenosi sve
 void MazeGenerator::generateMaze(Maze& mazeClass, int itemNumber) {
 	
 	char** maze = mazeClass.mazeMatrix;

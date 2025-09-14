@@ -2,13 +2,13 @@
  * ReportGenerator.cpp
  *
  * Implementacija klase ReportGenerator koja omogucava generisanje
- * zavrsnog izvestaja o trenutnom stanju igre lavirint.
- * Izveštaj ukljucuje prikaz stanja lavirinta, pozicija ucesnika,
+ * zavrsnog izvjestaja o trenutnom stanju igre lavirint.
+ * Izvjestaj ukljucuje prikaz stanja lavirinta, pozicija ucesnika,
  * broj predmeta i rezultat igre.
- * Izvestaj se upisuje u tekstualni fajl, a takodje se prikazuje i na konzoli.
+ * Izvjestaj se upisuje u tekstualni fajl, a takodje se prikazuje i na konzoli.
  *
  * Autor: Ognjen
- * Datum poslednje izmene: avgust 2025
+ * Datum poslednje izjmene: 14.9.2025.
  */
 #include "ReportGenerator.h"
 #include <iomanip>
@@ -24,51 +24,47 @@ using namespace std;
  * @param filename Ime fajla u koji se upisuje izvjestaj.
  */
 void ReportGenerator::generateReport(Game& game, const std::string& filename) {
-    std::ofstream reportFile(filename);
+    std::string report = generateReportContent(game);
 
+    std::ofstream reportFile(filename);
     if (!reportFile.is_open()) {
-        cerr << "Greska: Nije moguce kreirati izvestaj!" << std::endl;
+        std::cerr << "Greska: Nije moguce kreirati izvjestaj!" << std::endl;
         return;
     }
 
-    reportFile << "=== KONACNI IZVESTAJ IGRICE===\n\n";
-
-    reportFile << "=== STANJE LAVIRINTA ===\n";
-    reportFile << getMazeStateString(game) << "\n";
-
-    reportFile << "=== POZICIJE ===\n";
-    reportFile << getPositionsString(game) << "\n";
-
-    reportFile << "=== BROJ PREDMETA ===\n";
-    reportFile << getItemsString(game) << "\n";
-
-    reportFile << "=== REZULTAT IGRE ===\n";
-    if (game.getResult()) {
-        reportFile << "Igrac je stigao do izlaza i pobedio!\n";
-    }
-    else {
-        reportFile << "Igrac nije stigao do izlaza i izgubio je igru.\n";
-    }
-
+    reportFile << report;
     reportFile.close();
+
     system("CLS");
-    // Ispis na konzolu
-    cout << "Izvestaj uspesno generisan: " << filename << endl;
-    cout << "\n=== KONACNI IZVESTAJ IGRICE LAVIRINT ===\n\n";
-    cout << "=== STANJE LAVIRINTA ===\n";
-    cout << getMazeStateString(game) << "\n";
-    cout << "=== POZICIJE ===\n";
-    cout << getPositionsString(game) << "\n";
-    cout << "=== BROJ PREDMETA ===\n";
-    cout << getItemsString(game) << "\n";
-    cout << "=== REZULTAT IGRE ===\n";
+    std::cout << "Izvjestaj uspesno generisan: " << filename << std::endl;
+    std::cout << report;
+}
+
+std::string ReportGenerator::generateReportContent(Game& game) {
+    std::ostringstream oss;
+
+    oss << "=== KONACNI IZVJESTAJ IGRICE LAVIRINT ===\n\n";
+
+    oss << "=== STANJE LAVIRINTA ===\n";
+    oss << getMazeStateString(game) << "\n";
+
+    oss << "=== POZICIJE ===\n";
+    oss << getPositionsString(game) << "\n";
+
+    oss << "=== BROJ PREDMETA ===\n";
+    oss << getItemsString(game) << "\n";
+
+    oss << "=== REZULTAT IGRE ===\n";
     if (game.getResult()) {
-        cout << "Igrac je stigao do izlaza i pobedio!\n";
+        oss << "Igrac je stigao do izlaza i pobedio!\n";
     }
     else {
-        cout << "Igrac nije stigao do izlaza i izgubio je igru.\n";
+        oss << "Igrac nije stigao do izlaza i izgubio je igru.\n";
     }
+
+    return oss.str();
 }
+
 
 /**
  * Dohvata string koji opisuje trenutno stanje lavirinta iz igre.
@@ -116,5 +112,5 @@ std::string ReportGenerator::getPositionsString(Game& game) {
 std::string ReportGenerator::getItemsString(Game& game) {
     int itemCount = game.getItemNumber();
 
-    return "Ukupan broj predmeta u labirintu: " + std::to_string(itemCount) + "\n";
+    return "Ukupan broj predmeta u lavirintu: " + std::to_string(itemCount) + "\n";
 }

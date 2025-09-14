@@ -7,8 +7,8 @@
  * - Klasa sadrzi virtuelnu metodu applyEffect koju implementiraju konkretni tipovi predmeta
  * - Ova klasa se nasledjuje od strane klasa FogItem, SwordItem, ShieldItem, HammerItem
  *
- * Autori: Ognjen [dodaj ostale ako ih ima]
- * Datum poslednje izmene: Feb 22, 2025
+ * Autori: Ognjen 
+ * Datum poslednje izmjene: Feb 22, 2025
  */
 #pragma once
 
