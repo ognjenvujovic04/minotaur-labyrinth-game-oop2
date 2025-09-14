@@ -232,15 +232,16 @@ void Maze::brakeWall(int x, int y) {
 /**
  * Operator za pristup redovima lavirinta
  *
- * @param pRow red koji se pristupa
- * @return pokazivac na string koji predstavlja red
+ * @param x red
+ * @param y kolona
+ * @return karakter na zadatoj poziciji
  * @throws std::out_of_range ako je red van granica
  */
-const char* Maze::operator[](int pRow) const {
-	if (pRow < 0 || pRow >= rows) {
-		throw std::out_of_range("Row index out of bounds");
+const char Maze::getField(int x, int y) const {
+	if (x < 0 || x >= rows || y < 0 || y >= columns) {
+		throw std::out_of_range("Row or column index out of bounds");
 	}
-	return mazeMatrix[pRow];
+	return mazeMatrix[x][y];
 }
 
 /**

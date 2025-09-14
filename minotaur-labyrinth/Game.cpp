@@ -251,7 +251,7 @@ void Game::handleRobotMovement(char command)
 	}
 	else {
 		// Provjera da li je na novoj poziciji predmet
-		if (maze[newX][newY] == 'P') {
+		if (maze.getField(newX,newY) == 'P') {
 			int random = rand() % 4;
 			Item* item;
 			switch (random) {
@@ -278,10 +278,10 @@ void Game::handleRobotMovement(char command)
 			// Postavljanje nove pozicije robota
 			maze.moveRobot(newX, newY);
 		}
-		else if (maze[newX][newY] == 'U') {
+		else if (maze.getField(newX,newY) == 'U') {
 			throw "Na toj poziciji se nalazi ulaz!";
 		} 
-		else if (maze[newX][newY] == 'I') {
+		else if (maze.getField(newX,newY) == 'I') {
 			// Robot je stigao do izlaza
 			cout << endl << endl << "Uspjesno ste stigli do izlaza iz lavirinta!" << endl;
 			Sleep(1000);
@@ -289,7 +289,7 @@ void Game::handleRobotMovement(char command)
 			gameOver = true;
 			isWon = true;
 		} 
-		else if (maze[newX][newY] == 'M') {
+		else if (maze.getField(newX,newY) == 'M') {
 			if (isSwordActive) {
 				// Ubijen minotaur
 				isMinotaurAlive = false;
@@ -357,7 +357,7 @@ void Game::handleMinotaurMovement(){
 
 
 	if (maze.canMinotaurMoveTo(x - 1, y)) {
-		if (maze[x - 1][y] == 'R') {
+		if (maze.getField(x - 1, y) == 'R') {
 			if (!isShieldActive) {
 				foundRobot(x, y, x - 1, y);
 				return;
@@ -368,7 +368,7 @@ void Game::handleMinotaurMovement(){
 		}
 	}
 	if (maze.canMinotaurMoveTo(x + 1, y)) {
-		if (maze[x + 1][y] == 'R') {
+		if (maze.getField(x + 1, y) == 'R') {
 			if (!isShieldActive) {
 				foundRobot(x, y, x + 1, y);
 				return;
@@ -379,7 +379,7 @@ void Game::handleMinotaurMovement(){
 		}
 	}
 	if (maze.canMinotaurMoveTo(x, y - 1)) {
-		if (maze[x][y - 1] == 'R') {
+		if (maze.getField(x, y - 1) == 'R') {
 			if (!isShieldActive) {
 				foundRobot(x, y, x, y - 1);
 				return;
@@ -390,7 +390,7 @@ void Game::handleMinotaurMovement(){
 		}
 	}
 	if (maze.canMinotaurMoveTo(x, y + 1)) {
-		if (maze[x][y + 1] == 'R') {
+		if (maze.getField(x, y + 1) == 'R') {
 			if (!isShieldActive) {
 				foundRobot(x, y, x, y + 1);
 				return;

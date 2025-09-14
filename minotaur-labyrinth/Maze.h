@@ -32,7 +32,7 @@ public:
 	int getColumns() const;
 	std::tuple<int, int> getRobotPosition() const;
 	std::tuple<int, int> getMinotaurPosition() const;
-	const char* operator[](int row) const;
+	const char getField(int x, int y) const;
 
 	void setRobotPosition(std::tuple<int, int> newPosition);
 	void setMinotaurPosition(std::tuple<int, int> newPosition);
