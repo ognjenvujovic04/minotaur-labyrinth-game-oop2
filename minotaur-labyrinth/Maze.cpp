@@ -34,7 +34,7 @@ Maze::Maze(int pRows, int pColumns, int itemNumber) {
 	for (int i = 0; i < rows; i++) {
 		mazeMatrix[i] = new char[columns];
 	}
-	MazeGenerator::generateMaze(mazeMatrix, pRows, pColumns, itemNumber, robotPosition, minotaurPosition);
+	MazeGenerator::generateMaze(*this, itemNumber);
 }
 
 /**

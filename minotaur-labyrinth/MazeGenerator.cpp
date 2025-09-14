@@ -17,7 +17,6 @@
 #include <random>
 #include <windows.h>
 #include "MazeGenerator.h"
-
 using namespace std;
 
 /**
@@ -194,7 +193,7 @@ void MazeGenerator::generateMazeWalls(char** mazeMatrix, int rows, int columns, 
  * Povratna vrednost:
  * - bool: true ako postoji putanja do izlaza, false inace.
  */
-bool MazeGenerator::findPath(char** maze, int rows, int columns, tuple<int, int>& start, set<tuple<int, int>>& pVisited) {
+bool MazeGenerator::findPath(char** maze, tuple<int, int>& start, set<tuple<int, int>>& pVisited) {
 	bool pathExists = false;
 	set<tuple<int, int>> visited;
 	stack<tuple<int, int>> toVisit;
@@ -249,6 +248,7 @@ bool MazeGenerator::findPath(char** maze, int rows, int columns, tuple<int, int>
  * - Ispisuje lavirint i vreme generisanja.
  *
  * Ulazni argumenti:
+ * TODO
  * - char** maze: 2D matrica lavirinta koja ce biti generisana.
  * - int rows: broj redova lavirinta.
  * - int columns: broj kolona lavirinta.
@@ -259,81 +259,78 @@ bool MazeGenerator::findPath(char** maze, int rows, int columns, tuple<int, int>
  * Povratna vrednost:
  * - Nema povratnu vrednost (void).
  */
-void MazeGenerator::generateMaze(char** maze, int rows, int columns, int itemNumber, tuple<int, int>& robotPosition, tuple<int, int>& minotaurPosition) {
+//TODO popravit da se preko maze prenosi sve
+void MazeGenerator::generateMaze(Maze& mazeClass, int itemNumber) {
+	
+	char** maze = mazeClass.mazeMatrix;
+
 	// Mjerenje vremena generisanja
 	clock_t begin = clock();
 
 	// Uzimanje random seed-a
-	srand(time(0));
-	
+    srand(time(0));
+
 	// Posjecena polja
-	set<tuple<int, int>> visited;
+    set<tuple<int, int>> visited;
 
+    tuple<int, int> start;
 
-	tuple<int, int> start;
-	
 	// Zidovi i moguca polja
-	//generateWalls(maze, rows, columns, visited, start);
-	generateMazeWalls(maze, rows, columns, start);
-	if (findPath(maze, rows, columns, start, visited)) {
-		cout << "Putanja do izlaza je pronadjena!" << endl;
-	}
-	else {
-		cout << "Putanja do izlaza nije pronadjena!" << endl;
-	}
+	generateMazeWalls(maze, mazeClass.rows, mazeClass.columns, start);
 
-	robotPosition = start;
+    if (findPath(maze, start, visited)) {
+        cout << "Putanja do izlaza je pronadjena!" << endl;
+    } else {
+        cout << "Putanja do izlaza nije pronadjena!" << endl;
+    }
+
+    // Robot
+    mazeClass.robotPosition = start;
 
 	// Ispis stanja maze-a ali visited polja su zelene boje
-
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < columns; j++) {
-			if (visited.find(make_tuple(i, j)) != visited.end()) {
-				cout << "\033[1;32m" << maze[i][j] << "\033[0m";
-			}
-			else {
-				cout << maze[i][j];
-			}
-			if (maze[i][j] == 'R') {
-				start = make_tuple(i, j);
-			}
-		}
-		cout << endl;
-	}
-	cout << endl;
+	for (int i = 0; i < mazeClass.rows; i++) {
+        for (int j = 0; j < mazeClass.columns; j++) {
+            if (visited.find(make_tuple(i, j)) != visited.end()) {
+                cout << "\033[1;32m" << maze[i][j] << "\033[0m";
+            } else {
+                cout << maze[i][j];
+            }
+        }
+        cout << endl;
+    }
+    cout << endl;
 
 	
 	// Minotaur
 	// Pravi vektor polja na kojima moze biti minotaur
 	// gdje je minimalna udaljenost od robota 3 bloka
-	vector<tuple<int, int>> possibleMinotaurPositions;
-	for (auto it = visited.begin(); it != visited.end(); it++) {
-		if (abs(get<0>(*it) - get<0>(start)) + abs(get<1>(*it) - get<1>(start)) > 3) {
-			possibleMinotaurPositions.push_back(*it);
-		}
-	}
-	int minotaurIndex = rand() % possibleMinotaurPositions.size();
-	tuple<int, int> minotaurCaurrentPosition = possibleMinotaurPositions[minotaurIndex];
-	maze[get<0>(minotaurCaurrentPosition)][get<1>(minotaurCaurrentPosition)] = 'M';
-
-	minotaurPosition = minotaurCaurrentPosition;
+    vector<tuple<int, int>> possibleMinotaurPositions;
+    for (auto& pos : visited) {
+        if (abs(get<0>(pos) - get<0>(start)) + abs(get<1>(pos) - get<1>(start)) > 3) {
+            possibleMinotaurPositions.push_back(pos);
+        }
+    }
+    int minotaurIndex = rand() % possibleMinotaurPositions.size();
+    mazeClass.minotaurPosition = possibleMinotaurPositions[minotaurIndex];
+    maze[get<0>(mazeClass.minotaurPosition)][get<1>(mazeClass.minotaurPosition)] = 'M';
 
 
 	// Generisanje predmeta
-	int currentItems = 0;
-	while (currentItems != itemNumber) {
-		int itemX = rand() % (rows - 2) + 1;
-		int itemY = rand() % (columns - 2) + 1;
-		if (maze[itemX][itemY] == '.') {
-			maze[itemX][itemY] = 'P';
-			currentItems++;
-		}
-	}
+    int currentItems = 0;
+    while (currentItems != itemNumber) {
+        int itemX = rand() % (mazeClass.rows - 2) + 1;
+        int itemY = rand() % (mazeClass.columns - 2) + 1;
+        if (maze[itemX][itemY] == '.') {
+            maze[itemX][itemY] = 'P';
+            currentItems++;
+        }
+    }
 
 	// Ispis vremena generisanja u sekundima
-	clock_t end = clock();
-	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
-	cout << endl << "Vrijeme generisanja: " << elapsed_secs << "s" << endl << endl;
-	Sleep(5000);
+    clock_t end = clock();
+    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+    cout << endl << "Vrijeme generisanja: " << elapsed_secs << "s" << endl << endl;
+    Sleep(5000);
 }
+
 

@@ -15,6 +15,7 @@
 #include <tuple>
 
 class Maze {
+	friend class MazeGenerator;
 private:
 	char** mazeMatrix;                      // Matrica lavirinta (2D niz karaktera)
 	int rows;                               // Broj redova lavirinta
