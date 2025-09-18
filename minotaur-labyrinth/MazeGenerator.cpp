@@ -37,8 +37,8 @@ using namespace std;
  */
 void MazeGenerator::generateMazeWalls(char** mazeMatrix, int rows, int columns, tuple<int, int>& pStart) {
 	// Inicijalizacija generatora ranodom brojeva
-	std::random_device rd;
-	std::mt19937 gen(rd());
+	random_device rd;
+	mt19937 gen(rd());
 
 	// Inicijalizacija matrice lavirinta samo sa zidovima
 	for (int i = 0; i < rows; i++) {
@@ -48,8 +48,8 @@ void MazeGenerator::generateMazeWalls(char** mazeMatrix, int rows, int columns, 
 	}
 
 	// Postavljanje granica lavirinta
-	std::vector<tuple<int,int>> frontiers;
-	std::vector<std::vector<bool>> visited(rows, std::vector<bool>(columns, false));
+	vector<tuple<int,int>> frontiers;
+	vector<vector<bool>> visited(rows, vector<bool>(columns, false));
 
 	int dx[] = { -2, 2, 0, 0 };
 	int dy[] = { 0, 0, -2, 2 };
@@ -76,7 +76,7 @@ void MazeGenerator::generateMazeWalls(char** mazeMatrix, int rows, int columns, 
 	// Glavina petlja Primovog algoritma
 	while (!frontiers.empty()) {
 		// Nesumican odabir iz frontiers
-		std::uniform_int_distribution<> dis(0, frontiers.size() - 1);
+		uniform_int_distribution<> dis(0, frontiers.size() - 1);
 		int randomIndex = dis(gen);
 		tuple<int,int> current = frontiers[randomIndex];
 		frontiers.erase(frontiers.begin() + randomIndex);
@@ -87,7 +87,7 @@ void MazeGenerator::generateMazeWalls(char** mazeMatrix, int rows, int columns, 
 		}
 
 		// Odredjivanje susjeda trenutne pozicije
-		std::vector<tuple<int,int>> neighbors;
+		vector<tuple<int,int>> neighbors;
 		for (int i = 0; i < 4; i++) {
 			int adjRow = get<0>(current) + dx[i];
 			int adjCol = get<1>(current) + dy[i];
@@ -101,7 +101,7 @@ void MazeGenerator::generateMazeWalls(char** mazeMatrix, int rows, int columns, 
 
 		if (!neighbors.empty()) {
 			// Nasumicno odaberi jednog susjeda
-			std::uniform_int_distribution<> neighborDis(0, neighbors.size() - 1);
+			uniform_int_distribution<> neighborDis(0, neighbors.size() - 1);
 			tuple<int,int> neighbor = neighbors[neighborDis(gen)];
 
 			// Napravi prolaz izmedju trenutne pozicije i susjeda
@@ -138,14 +138,14 @@ void MazeGenerator::generateMazeWalls(char** mazeMatrix, int rows, int columns, 
 	}
 
 	// Napravi ulaz nesumicno
-	std::uniform_int_distribution<> entranceDis(1, columns - 2);
+	uniform_int_distribution<> entranceDis(1, columns - 2);
 	int entranceCol = entranceDis(gen);
 	mazeMatrix[0][entranceCol] = 'U';
 	tuple<int, int> entrancePosition = make_tuple(1, entranceCol);
 	pStart = entrancePosition;
 
 	// Napravi izlaz nesumicno
-	std::uniform_int_distribution<> exitDis(1, columns - 2);
+	uniform_int_distribution<> exitDis(1, columns - 2);
 	int exitCol = exitDis(gen);
 	mazeMatrix[rows - 1][exitCol] = 'I';
 
@@ -324,7 +324,7 @@ void MazeGenerator::generateMaze(Maze& mazeClass, int itemNumber) {
     clock_t end = clock();
     double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
     cout << endl << "Vrijeme generisanja: " << elapsed_secs << "s" << endl << endl;
-    Sleep(5000);
+    Sleep(3000);
 }
 
 
