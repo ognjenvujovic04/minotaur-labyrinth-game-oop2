@@ -7,7 +7,7 @@
  * - Generisanje polja za robota, minotaura i predmeta unutar lavirinta.
  *
  * Autori: Ognjen
- * Datum poslednje izjmene: 14.9.2025.
+ * Datum poslednje izjmene: 18.9.2025.
  */
 #include <iostream>
 #include <ctime>
@@ -76,7 +76,7 @@ void MazeGenerator::generateMazeWalls(char** mazeMatrix, int rows, int columns, 
 	// Glavina petlja Primovog algoritma
 	while (!frontiers.empty()) {
 		// Nesumican odabir iz frontiers
-		uniform_int_distribution<> dis(0, frontiers.size() - 1);
+		uniform_int_distribution<> dis(0, static_cast<int>(frontiers.size() - 1));
 		int randomIndex = dis(gen);
 		tuple<int,int> current = frontiers[randomIndex];
 		frontiers.erase(frontiers.begin() + randomIndex);
@@ -101,7 +101,7 @@ void MazeGenerator::generateMazeWalls(char** mazeMatrix, int rows, int columns, 
 
 		if (!neighbors.empty()) {
 			// Nasumicno odaberi jednog susjeda
-			uniform_int_distribution<> neighborDis(0, neighbors.size() - 1);
+			uniform_int_distribution<> neighborDis(0, static_cast<int>(neighbors.size() - 1));
 			tuple<int,int> neighbor = neighbors[neighborDis(gen)];
 
 			// Napravi prolaz izmedju trenutne pozicije i susjeda
@@ -262,7 +262,7 @@ void MazeGenerator::generateMaze(Maze& mazeClass, int itemNumber) {
 	clock_t begin = clock();
 
 	// Uzimanje random seed-a
-    srand(time(0));
+	srand(static_cast<unsigned int>(time(0)));
 
 	// Posjecena polja
     set<tuple<int, int>> visited;
