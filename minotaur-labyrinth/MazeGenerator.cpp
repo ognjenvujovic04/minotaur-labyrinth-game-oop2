@@ -185,8 +185,6 @@ void MazeGenerator::generateMazeWalls(char** mazeMatrix, int rows, int columns, 
  *
  * Ulazni argumenti:
  * - char** maze: 2D matrica lavirinta.
- * - int rows: broj redova lavirinta.
- * - int columns: broj kolona lavirinta.
  * - tuple<int, int>& start: pozicija od koje pocinje pretraga.
  * - set<tuple<int, int>>& pVisited: referenca za skup posecenih cvorova.
  *

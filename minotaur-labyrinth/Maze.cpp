@@ -92,25 +92,25 @@ void Maze::printMaze(bool isFogActive) const{
 				}
 			}
 			if (mazeMatrix[i][j] == 'U') {
-				std::cout << "\033[36m" << mazeMatrix[i][j] << "\033[0m";
+				cout << "\033[36m" << mazeMatrix[i][j] << "\033[0m";
 			}
 			else if (mazeMatrix[i][j] == 'I') {
-				std::cout << "\033[32m" << mazeMatrix[i][j] << "\033[0m";
+				cout << "\033[32m" << mazeMatrix[i][j] << "\033[0m";
 			}
 			else if (mazeMatrix[i][j] == 'R') {
-				std::cout << "\033[34m" << mazeMatrix[i][j] << "\033[0m";
+				cout << "\033[34m" << mazeMatrix[i][j] << "\033[0m";
 			}
 			else if (mazeMatrix[i][j] == 'M') {
-				std::cout << "\033[31m" << mazeMatrix[i][j] << "\033[0m";
+				cout << "\033[31m" << mazeMatrix[i][j] << "\033[0m";
 			}
 			else if (mazeMatrix[i][j] == 'P') {
-				std::cout << "\033[33m" << mazeMatrix[i][j] << "\033[0m";
+				cout << "\033[33m" << mazeMatrix[i][j] << "\033[0m";
 			}
 			else {
-				std::cout << mazeMatrix[i][j];
+				cout << mazeMatrix[i][j];
 			}
 		}
-		std::cout << std::endl;
+		cout << endl;
 	}
 
 }
@@ -235,11 +235,11 @@ void Maze::brakeWall(int x, int y) {
  * @param x red
  * @param y kolona
  * @return karakter na zadatoj poziciji
- * @throws std::out_of_range ako je red van granica
+ * @throws out_of_range ako je red van granica
  */
 const char Maze::getField(int x, int y) const {
 	if (x < 0 || x >= rows || y < 0 || y >= columns) {
-		throw std::out_of_range("Row or column index out of bounds");
+		throw out_of_range("Row or column index out of bounds");
 	}
 	return mazeMatrix[x][y];
 }

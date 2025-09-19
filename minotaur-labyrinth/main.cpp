@@ -31,7 +31,7 @@ using namespace std;
  */
 void clearInputError() {
     cin.clear();
-    cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
+    cin.ignore((numeric_limits<streamsize>::max)(), '\n');
 }
 
 /**
@@ -40,7 +40,7 @@ void clearInputError() {
  * @param str String koji se proverava
  * @return bool - true ako su svi karakteri cifre, false inace
  */
-bool isDigitsOnly(const std::string& str) {
+bool isDigitsOnly(const string& str) {
     static const regex digits_only("^[0-9]+$");
     return regex_match(str, digits_only);
 }
@@ -163,20 +163,20 @@ int main(int argc, char* argv[]) {
         }
 
         try {
-            columns = std::stoi(argv[1]);
-            rows = std::stoi(argv[2]);
-            item_number = std::stoi(argv[3]);
+            columns = stoi(argv[1]);
+            rows = stoi(argv[2]);
+            item_number = stoi(argv[3]);
 
             if (!validateInputs(columns, rows, item_number)) {
                 cout << "Unos iz komandne linije nije validan. Izlazak iz programa..." << endl;
                 return 1;
             }
         }
-        catch (const std::invalid_argument&) {
+        catch (const invalid_argument&) {
             cerr << "Svi argumenti moraju biti celi brojevi. Izlazak iz programa..." << endl;
             return 1;
         }
-        catch (const std::out_of_range&) {
+        catch (const out_of_range&) {
             cerr << "Uneti brojevi su van dozvoljenog opsega. Izlazak iz programa..." << endl;
             return 1;
         }

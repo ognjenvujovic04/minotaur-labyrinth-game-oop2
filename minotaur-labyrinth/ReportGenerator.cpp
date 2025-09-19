@@ -23,12 +23,12 @@ using namespace std;
  * @param game Referenca na objekat igre od kojeg se preuzimaju podaci.
  * @param filename Ime fajla u koji se upisuje izvjestaj.
  */
-void ReportGenerator::generateReport(Game& game, const std::string& filename) {
-    std::string report = generateReportContent(game);
+void ReportGenerator::generateReport(Game& game, const string& filename) {
+    string report = generateReportContent(game);
 
-    std::ofstream reportFile(filename);
+    ofstream reportFile(filename);
     if (!reportFile.is_open()) {
-        std::cerr << "Greska: Nije moguce kreirati izvjestaj!" << std::endl;
+        cerr << "Greska: Nije moguce kreirati izvjestaj!" << endl;
         return;
     }
 
@@ -36,12 +36,12 @@ void ReportGenerator::generateReport(Game& game, const std::string& filename) {
     reportFile.close();
 
     system("CLS");
-    std::cout << "Izvjestaj uspesno generisan: " << filename << std::endl;
-    std::cout << report;
+    cout << "Izvjestaj uspesno generisan: " << filename << endl;
+    cout << report;
 }
 
-std::string ReportGenerator::generateReportContent(Game& game) {
-    std::ostringstream oss;
+string ReportGenerator::generateReportContent(Game& game) {
+    ostringstream oss;
 
     oss << "=== KONACNI IZVJESTAJ IGRICE LAVIRINT ===\n\n";
 
@@ -72,7 +72,7 @@ std::string ReportGenerator::generateReportContent(Game& game) {
  * @param game Referenca na objekat igre.
  * @return String sa opisom lavirinta.
  */
-std::string ReportGenerator::getMazeStateString(Game& game) {
+string ReportGenerator::getMazeStateString(Game& game) {
     return game.getMazeString();
 }
 
@@ -83,7 +83,7 @@ std::string ReportGenerator::getMazeStateString(Game& game) {
  * @param game Referenca na objekat igre.
  * @return String sa informacijama o pozicijama ucesnika.
  */
-std::string ReportGenerator::getPositionsString(Game& game) {
+string ReportGenerator::getPositionsString(Game& game) {
     tuple<int, int> robotPos = game.getRobotPosition();
     tuple<int, int> minotaurPos = game.getMinotaurPosition();
 
@@ -92,13 +92,13 @@ std::string ReportGenerator::getPositionsString(Game& game) {
         result += "Robot je ubijen.\n";
     }
     else {
-        result += "Pozicija robota: (" + std::to_string(get<0>(robotPos)) + ", " + std::to_string(get<1>(robotPos)) + ")\n";
+        result += "Pozicija robota: (" + to_string(get<0>(robotPos)) + ", " + to_string(get<1>(robotPos)) + ")\n";
     }
     if (get<0>(minotaurPos) == -1 && get<1>(minotaurPos) == -1) {
         result += "Minotaur je ubijen.\n";
     }
     else {
-        result += "Pozicija minotaura: (" + std::to_string(get<0>(minotaurPos)) + ", " + std::to_string(get<1>(minotaurPos)) + ")\n";
+        result += "Pozicija minotaura: (" + to_string(get<0>(minotaurPos)) + ", " + to_string(get<1>(minotaurPos)) + ")\n";
     }
     return result;
 }
@@ -109,8 +109,8 @@ std::string ReportGenerator::getPositionsString(Game& game) {
  * @param game Referenca na objekat igre.
  * @return String sa brojem predmeta.
  */
-std::string ReportGenerator::getItemsString(Game& game) {
+string ReportGenerator::getItemsString(Game& game) {
     int itemCount = game.getItemNumber();
 
-    return "Ukupan broj predmeta u lavirintu: " + std::to_string(itemCount) + "\n";
+    return "Ukupan broj predmeta u lavirintu: " + to_string(itemCount) + "\n";
 }
