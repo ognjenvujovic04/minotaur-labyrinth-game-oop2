@@ -16,7 +16,7 @@
 
 class ReportGenerator {
 public:
-    static void generateReport( Game& game, const std::string& filename = "maze_report.txt");
+    static void generateReport( Game& game, const std::string& filename = "../assets/reports/maze_report.txt");
 
 private:
     static std::string generateReportContent(Game& game);

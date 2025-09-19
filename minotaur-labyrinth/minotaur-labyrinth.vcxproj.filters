@@ -51,6 +51,9 @@
     <ClCompile Include="ReportGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MazeLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files\Items</Filter>
     </ClInclude>
     <ClInclude Include="ReportGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MazeLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,0 +1,17 @@
+########U#######
+#PPPPPPPRPPPPPP#
+#P############P#
+#P############P#
+#P############P#
+#P############P#
+#P############P#
+#P############P#
+#P############P#
+#P############P#
+#P############P#
+#P############P#
+#P############P#
+#P############P#
+#PPPPPPMPPPPPPP#
+#######I########
+*Testiranje funkcionalnosti cekica i trajanja predmeta
