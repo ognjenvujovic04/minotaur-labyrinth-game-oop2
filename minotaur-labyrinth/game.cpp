@@ -71,14 +71,14 @@ void Game::refresh(){
 	isShieldActive = false;
 	isHammerActive = false;
 
-	for (Item* item : items) {
-		item->decreaseDuration();
-		if (item->getDuration() == -1) {
-			items.erase(remove(items.begin(), items.end(), item), items.end());
-			delete item;
+	for (int i = items.size() - 1; i >= 0; i--) {
+		items[i]->decreaseDuration();
+		if (items[i]->getDuration() == -1) {
+			delete items[i];
+			items.erase(items.begin() + i);
 			continue;
 		}
-		switch (item->getType()) {
+		switch (items[i]->getType()) {
 			case FOG:    isFogActive = true; break;
 			case SWORD:  isSwordActive = true; break;
 			case SHIELD: isShieldActive = true; break;
