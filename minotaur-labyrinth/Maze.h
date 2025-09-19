@@ -16,6 +16,7 @@
 
 class Maze {
 	friend class MazeGenerator;
+	friend class MazeLoader;
 private:
 	char** mazeMatrix;                      // Matrica lavirinta (2D niz karaktera)
 	int rows;                               // Broj redova lavirinta
