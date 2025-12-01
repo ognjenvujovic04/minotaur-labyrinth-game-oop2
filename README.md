@@ -23,8 +23,8 @@ This is a simple console-based game developed as a project for the **OOP2** cour
 
 ## Screenshots
 <p align="left">
-    <img src="assets/Screenshot 2025-02-24 173850.png" height="300" >
-    <img src="assets/Screenshot 2025-02-24 173908.png" height="300" >
+    <img src="assets/screenshots/Screenshot 2025-02-24 173850.png" height="300" >
+    <img src="assets/screenshots/Screenshot 2025-02-24 173908.png" height="300" >
 </p>
 
 ## Future Plans
